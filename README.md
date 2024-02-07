@@ -10,8 +10,8 @@ Game Programming class, tentatively titled "Lost in Time".
 
 ## Set Up
 This project was built using Unity version 2022.3.18f1. If you don't already
-have it installed, [this link](unityhub://2022.3.18f1/d29bea25151d) will prompt
-you to install it through Unity Hub.
+have it installed, you can find the release
+[here](https://unity.com/releases/editor/whats-new/2022.3.18).
 
 To set up the project on your end for the very first time, clone this repo onto
 your machine. Then, through Unity Hub, open up the LostInTime folder as a Unity
