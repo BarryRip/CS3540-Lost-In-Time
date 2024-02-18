@@ -63,11 +63,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // When airborne, player has loose air control and slowly faces direction we want.
+            // When airborne, player has loose air control.
+            input *= speed;
             input.y = movement.y;
             movement = Vector3.Lerp(movement, input, airControl * Time.deltaTime);
-            float rotationAngle = Mathf.LerpAngle(0f, Vector3.Angle(transform.forward, input), Time.deltaTime);
-            transform.LookAt((transform.position + transform.forward));
         }
     }
 

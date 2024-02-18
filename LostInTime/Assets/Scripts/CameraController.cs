@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float mouseSensitivity = 1000f;
+    public float horizontalMouseSensitivity = 1000f;
+    public float verticalMouseSensitivity = 1000f;
     public Transform player;
-    public Transform childSphere;
-    public Transform cameraTarget;
+    public Transform cameraSphere;
 
-    private float pitch;
+    private float xRotation;
+    private float yRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -21,22 +22,19 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.position;
+        float moveX = Input.GetAxis("Mouse X") * horizontalMouseSensitivity * Time.deltaTime;
+        float moveY = Input.GetAxis("Mouse Y") * verticalMouseSensitivity * Time.deltaTime;
 
-        float moveX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float moveY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-        transform.Rotate(Vector3.up * moveX);
+        xRotation += moveX;
+        yRotation -= moveY;
+        yRotation = Mathf.Clamp(yRotation, -80f, 80f);
+        cameraSphere.transform.localRotation = Quaternion.Euler(yRotation, xRotation, 0f);
 
-        pitch -= moveY;
-        pitch = Mathf.Clamp(pitch, -90f, 90f);
-        childSphere.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
-
-        MoveCameraToTarget();
+        CenterCameraOnPlayer();
     }
 
-    private void MoveCameraToTarget()
+    private void CenterCameraOnPlayer()
     {
-        Rigidbody rb = Camera.main.GetComponent<Rigidbody>();
-        rb.Move(cameraTarget.transform.position, cameraTarget.rotation);
+        cameraSphere.transform.position = player.transform.position;
     }
 }
