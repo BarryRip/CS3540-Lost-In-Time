@@ -18,6 +18,6 @@ public class SwingingBehavior : MonoBehaviour
     {
         float t = (Mathf.Sin(Time.time) + 1) / 2f;
         float rotation = Mathf.Lerp(-maxRotation, maxRotation, t);
-        transform.rotation = Quaternion.Euler(rotation, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(rotation, 0f, 0f);
     }
 }
