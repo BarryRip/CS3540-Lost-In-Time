@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Graybox.unity
+    guid: 416df8f8d84395941ba616596c283810
+  - enabled: 1
+    path: Assets/Scenes/Circus.unity
+    guid: bffc12dd8953e48438bf329c2f027469
+  - enabled: 1
+    path: Assets/Scenes/PlayerTest.unity
+    guid: 1a3b18ae050cc5a498d2f685668ba0d6
   m_configObjects: {}
