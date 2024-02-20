@@ -134,6 +134,6 @@ public class PlayerController : MonoBehaviour
     /// <returns>True if the player has the double jump ability, false otherwise.</returns>
     private bool CanDoubleJump()
     {
-        return true;
+        return PowerUpManager.HasAbility(0);
     }
 }
