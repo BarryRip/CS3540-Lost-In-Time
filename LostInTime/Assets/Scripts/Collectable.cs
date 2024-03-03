@@ -17,6 +17,7 @@ public class Collectable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            CollectableManager.CollectedIds[partID] = true;
             Destroy(gameObject, 1);
         }
 
@@ -24,7 +25,7 @@ public class Collectable : MonoBehaviour
 
     private void OnDestroy()
     {
-        CollectableManager.CollectedIds[partID] = true;
+        
     }
 
     // Update is called once per frame
