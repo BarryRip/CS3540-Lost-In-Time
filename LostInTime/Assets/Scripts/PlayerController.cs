@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         input = CalculateCameraSpaceInput(input);
         ApplyMovement(input);
         HandleJump();
+        HandleSteepSlopes();
         ApplyGravity();
         controller.Move(Time.deltaTime * movement);
     }
@@ -60,6 +61,8 @@ public class PlayerController : MonoBehaviour
             // When grounded, player snaps to face the direction we want, and moves forward.
             transform.LookAt(transform.position + input);
             movement = transform.forward * input.magnitude * speed;
+            // To avoid slopes eating jumps, move player down as well (scaled to slope limit)
+            movement.y = controller.slopeLimit * (-1/6f);
         }
         else
         {
@@ -87,6 +90,41 @@ public class PlayerController : MonoBehaviour
                 movement.y = Mathf.Sqrt(2 * jumpHeight * gravity);
             }
         }
+    }
+
+    /// <summary>
+    /// Handles checking the slope below the player and changing movement
+    /// appropriately. This is done to stop player sticking to slopes.
+    /// </summary>
+    private void HandleSteepSlopes()
+    {
+        if (OnSteepSlope())
+        {
+            RaycastHit hit;
+            Physics.Raycast(transform.position, transform.up * -1f, out hit, 5f);
+            Vector3 slopeDownDir = hit.normal - transform.up;
+            movement = slopeDownDir.normalized * movement.magnitude;
+            Debug.Log("Slope was steep: " + slopeDownDir + " / " + movement);
+        }
+    }
+
+    /// <summary>
+    /// Determines if the player is currently on a steep slope.
+    /// </summary>
+    private bool OnSteepSlope()
+    {
+        RaycastHit hit;
+        if (controller.isGrounded && Physics.Raycast(transform.position, transform.up * -1f, out hit, 5f))
+        {
+            Debug.Log("grounded and detecting a floor");
+            float angleOfSlope = Vector3.Angle(hit.normal, transform.up);
+            Debug.Log("angle is " + angleOfSlope);
+            if (angleOfSlope > controller.slopeLimit)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
