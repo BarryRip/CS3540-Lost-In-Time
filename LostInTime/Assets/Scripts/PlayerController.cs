@@ -13,6 +13,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
 
     private bool hasDoubleJumpCharge;
+    // This "wasApplyingGroundingForce" bool is a bit confusing, but
+    // essentially, it indicates if a grounding force was applied to
+    // the player last frame. Should reset y velocity to 0 if true.
+    private bool wasApplyingGroundingForce;
+    private static float SLOPE_RAYCAST_LENGTH = 5f;
+    private static float GROUNDING_FORCE = 1 / 6f;
+    private static float SLOPE_SLIDE_SPEED = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +34,8 @@ public class PlayerController : MonoBehaviour
         input = CalculateCameraSpaceInput(input);
         ApplyMovement(input);
         HandleJump();
-        HandleSteepSlopes();
         ApplyGravity();
+        HandleSteepSlopes();
         controller.Move(Time.deltaTime * movement);
     }
 
@@ -61,11 +68,17 @@ public class PlayerController : MonoBehaviour
             // When grounded, player snaps to face the direction we want, and moves forward.
             transform.LookAt(transform.position + input);
             movement = transform.forward * input.magnitude * speed;
-            // To avoid slopes eating jumps, move player down as well (scaled to slope limit)
-            movement.y = controller.slopeLimit * (-1/6f);
+            // To avoid slopes eating jumps, apply grounding force to player (scaled to slope limit)
+            movement.y = controller.slopeLimit * -GROUNDING_FORCE;
+            wasApplyingGroundingForce = true;
         }
         else
         {
+            if (wasApplyingGroundingForce)
+            {
+                wasApplyingGroundingForce = false;
+                movement.y = 0f;
+            }
             // When airborne, player has loose air control.
             input *= speed;
             input.y = movement.y;
@@ -82,6 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             if (controller.isGrounded)
             {
+                wasApplyingGroundingForce = false;
                 movement.y = Mathf.Sqrt(2 * jumpHeight * gravity);
             }
             else if (CanDoubleJump() && hasDoubleJumpCharge)
@@ -100,11 +114,12 @@ public class PlayerController : MonoBehaviour
     {
         if (OnSteepSlope())
         {
+            wasApplyingGroundingForce = false;
             RaycastHit hit;
-            Physics.Raycast(transform.position, transform.up * -1f, out hit, 5f);
-            Vector3 slopeDownDir = hit.normal - transform.up;
-            movement = slopeDownDir.normalized * movement.magnitude;
-            Debug.Log("Slope was steep: " + slopeDownDir + " / " + movement);
+            Physics.Raycast(transform.position, -transform.up, out hit, SLOPE_RAYCAST_LENGTH);
+            Vector3 tangentDir = Vector3.Cross(hit.normal, transform.up);
+            Vector3 downSlopeDir = Vector3.Cross(hit.normal, tangentDir);
+            movement = downSlopeDir.normalized * SLOPE_SLIDE_SPEED;
         }
     }
 
@@ -114,11 +129,9 @@ public class PlayerController : MonoBehaviour
     private bool OnSteepSlope()
     {
         RaycastHit hit;
-        if (controller.isGrounded && Physics.Raycast(transform.position, transform.up * -1f, out hit, 5f))
+        if (controller.isGrounded && Physics.Raycast(transform.position, -transform.up, out hit, SLOPE_RAYCAST_LENGTH))
         {
-            Debug.Log("grounded and detecting a floor");
             float angleOfSlope = Vector3.Angle(hit.normal, transform.up);
-            Debug.Log("angle is " + angleOfSlope);
             if (angleOfSlope > controller.slopeLimit)
             {
                 return true;
