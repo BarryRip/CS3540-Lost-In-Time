@@ -1,44 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-//using System.Diagnostics;
+using TMPro;
 
 public class NpcInteraction : MonoBehaviour
 {
-    private Animator animator;
+    public TextMeshProUGUI textField;
 
-    public Image interactE;
+    [TextArea(3, 3)]
+    public string[] dialogueLines;
+    Animator anim;
 
-    private void Talk()
+    private int currentDialogueIdx;
+
+    bool chatRadius = false;
+
+    bool talking = false;
+
+    private void Start()
     {
-
+        textField.text = "";
+        anim = GetComponent<Animator>();
+        anim.SetInteger("animState", 0);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        interactE.gameObject.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.E) && dialogueLines.Length > 0 && chatRadius)
+        {
+            Dialogue();
+            anim.SetInteger("animState", 1);
+            talking = true;
+        }
+
+        if (talking = false)
+        {
+            anim.SetInteger("animState", 0);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnTriggerEnter(Collider other)
     {
-        
+        chatRadius = true;
+        Debug.Log("YOU HIT ME!");
     }
 
-    public void ShowInteractionButton()
+    private void OnTriggerExit(Collider other)
     {
-        interactE.gameObject.SetActive(true);
+        chatRadius = false;
+        talking = false;
+        anim.SetInteger("animState", 0);
+        textField.text = "";
+        Debug.Log("Left Me Hanging");
     }
 
-    public void HideInteractionButton()
+    private void Dialogue()
     {
-        interactE.gameObject.SetActive(false);
-    }
+        if (currentDialogueIdx < dialogueLines.Length)
+        {
+            textField.text = dialogueLines[currentDialogueIdx];
+            currentDialogueIdx++;
+        }
+        else
+        {
+            currentDialogueIdx = 0;
 
-    public void Interact()
-    {
-        Debug.Log("Interaction");
+        }
     }
 }
