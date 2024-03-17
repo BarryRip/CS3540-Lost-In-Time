@@ -13,6 +13,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
 
     private bool hasDoubleJumpCharge;
+    // This "wasApplyingGroundingForce" bool is a bit confusing, but
+    // essentially, it indicates if a grounding force was applied to
+    // the player last frame. Should reset y velocity to 0 if true.
+    private bool wasApplyingGroundingForce;
+    private static float SLOPE_RAYCAST_LENGTH = 5f;
+    private static float GROUNDING_FORCE = 1 / 6f;
+    private static float SLOPE_SLIDE_SPEED = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +35,7 @@ public class PlayerController : MonoBehaviour
         ApplyMovement(input);
         HandleJump();
         ApplyGravity();
+        HandleSteepSlopes();
         controller.Move(Time.deltaTime * movement);
     }
 
@@ -60,9 +68,17 @@ public class PlayerController : MonoBehaviour
             // When grounded, player snaps to face the direction we want, and moves forward.
             transform.LookAt(transform.position + input);
             movement = transform.forward * input.magnitude * speed;
+            // To avoid slopes eating jumps, apply grounding force to player (scaled to slope limit)
+            movement.y = controller.slopeLimit * -GROUNDING_FORCE;
+            wasApplyingGroundingForce = true;
         }
         else
         {
+            if (wasApplyingGroundingForce)
+            {
+                wasApplyingGroundingForce = false;
+                movement.y = 0f;
+            }
             // When airborne, player has loose air control.
             input *= speed;
             input.y = movement.y;
@@ -79,6 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             if (controller.isGrounded)
             {
+                wasApplyingGroundingForce = false;
                 movement.y = Mathf.Sqrt(2 * jumpHeight * gravity);
             }
             else if (CanDoubleJump() && hasDoubleJumpCharge)
@@ -87,6 +104,40 @@ public class PlayerController : MonoBehaviour
                 movement.y = Mathf.Sqrt(2 * jumpHeight * gravity);
             }
         }
+    }
+
+    /// <summary>
+    /// Handles checking the slope below the player and changing movement
+    /// appropriately. This is done to stop player sticking to slopes.
+    /// </summary>
+    private void HandleSteepSlopes()
+    {
+        if (OnSteepSlope())
+        {
+            wasApplyingGroundingForce = false;
+            RaycastHit hit;
+            Physics.Raycast(transform.position, -transform.up, out hit, SLOPE_RAYCAST_LENGTH);
+            Vector3 tangentDir = Vector3.Cross(hit.normal, transform.up);
+            Vector3 downSlopeDir = Vector3.Cross(hit.normal, tangentDir);
+            movement = downSlopeDir.normalized * SLOPE_SLIDE_SPEED;
+        }
+    }
+
+    /// <summary>
+    /// Determines if the player is currently on a steep slope.
+    /// </summary>
+    private bool OnSteepSlope()
+    {
+        RaycastHit hit;
+        if (controller.isGrounded && Physics.Raycast(transform.position, -transform.up, out hit, SLOPE_RAYCAST_LENGTH))
+        {
+            float angleOfSlope = Vector3.Angle(hit.normal, transform.up);
+            if (angleOfSlope > controller.slopeLimit)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /// <summary>
