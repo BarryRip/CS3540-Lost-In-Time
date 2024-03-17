@@ -10,6 +10,7 @@ public class NpcInteraction : MonoBehaviour
     [TextArea(3, 3)]
     public string[] dialogueLines;
     Animator anim;
+    public GameObject interact;
 
     private int currentDialogueIdx;
 
@@ -22,6 +23,7 @@ public class NpcInteraction : MonoBehaviour
         textField.text = "";
         anim = GetComponent<Animator>();
         anim.SetInteger("animState", 0);
+        interact.SetActive(false);
     }
 
     private void Update()
@@ -42,6 +44,7 @@ public class NpcInteraction : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         chatRadius = true;
+        interact.SetActive(true);
         Debug.Log("YOU HIT ME!");
     }
 
@@ -49,6 +52,7 @@ public class NpcInteraction : MonoBehaviour
     {
         chatRadius = false;
         talking = false;
+        interact.SetActive(false);
         anim.SetInteger("animState", 0);
         textField.text = "";
         Debug.Log("Left Me Hanging");
