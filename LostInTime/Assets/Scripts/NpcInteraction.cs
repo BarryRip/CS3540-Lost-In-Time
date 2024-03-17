@@ -6,6 +6,7 @@ using TMPro;
 public class NpcInteraction : MonoBehaviour
 {
     public TextMeshProUGUI textField;
+    public AudioClip talkSFX;
 
     [TextArea(3, 3)]
     public string[] dialogueLines;
@@ -62,6 +63,7 @@ public class NpcInteraction : MonoBehaviour
     {
         if (currentDialogueIdx < dialogueLines.Length)
         {
+            AudioSource.PlayClipAtPoint(talkSFX, Camera.main.transform.position);
             textField.text = dialogueLines[currentDialogueIdx];
             currentDialogueIdx++;
         }
