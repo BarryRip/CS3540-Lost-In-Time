@@ -16,10 +16,16 @@ public class WalkSounds : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        var moveHorizontal = Input.GetAxis("Horizontal");
+        var moveVertical = Input.GetAxis("Vertical");
+
         if (collision.gameObject.CompareTag("Player"))
         {
-            groundSoundSource.loop = true;
-            groundSoundSource.Play();
+            if (moveHorizontal < 0 || moveHorizontal > 0 || moveVertical < 0 || moveVertical > 0)
+            {
+                groundSoundSource.loop = true;
+                groundSoundSource.Play();
+            }
         }
         else
         {
