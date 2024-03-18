@@ -11,6 +11,10 @@ public class WalkSounds : MonoBehaviour
     void Start()
     {
         groundSoundSource = GetComponent<AudioSource>();
+        if (groundSoundSource == null)
+        {
+            groundSoundSource = gameObject.AddComponent<AudioSource>();
+        }
         groundSoundSource.clip = groundSFX;
     }
 
