@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float gravity = 9.81f;
     public float airControl = 2f;
+
+    Animator anim;
 
     private CharacterController controller;
     private Vector3 movement;
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour
         ApplyGravity();
         HandleSteepSlopes();
         controller.Move(Time.deltaTime * movement);
+
     }
 
     private void FixedUpdate()
@@ -68,9 +73,20 @@ public class PlayerController : MonoBehaviour
             // When grounded, player snaps to face the direction we want, and moves forward.
             transform.LookAt(transform.position + input);
             movement = transform.forward * input.magnitude * speed;
+
             // To avoid slopes eating jumps, apply grounding force to player (scaled to slope limit)
             movement.y = controller.slopeLimit * -GROUNDING_FORCE;
             wasApplyingGroundingForce = true;
+            
+            if (Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") < 0 || Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0)
+            {
+                anim.SetInteger("animState", 1);
+            }
+            else
+            {
+                anim.SetInteger("animState", 0);
+            }
+            
         }
         else
         {
@@ -78,6 +94,7 @@ public class PlayerController : MonoBehaviour
             {
                 wasApplyingGroundingForce = false;
                 movement.y = 0f;
+                anim.SetInteger("animState", (speed > 0) ? 1 : 0);
             }
             // When airborne, player has loose air control.
             input *= speed;
@@ -97,11 +114,13 @@ public class PlayerController : MonoBehaviour
             {
                 wasApplyingGroundingForce = false;
                 movement.y = Mathf.Sqrt(2 * jumpHeight * gravity);
+                anim.SetInteger("animState", 2);
             }
             else if (CanDoubleJump() && hasDoubleJumpCharge)
             {
                 hasDoubleJumpCharge = false;
                 movement.y = Mathf.Sqrt(2 * jumpHeight * gravity);
+                anim.SetInteger("animState", 2);
             }
         }
     }

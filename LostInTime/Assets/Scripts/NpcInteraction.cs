@@ -36,7 +36,7 @@ public class NpcInteraction : MonoBehaviour
             talking = true;
         }
 
-        if (talking = false)
+        if (talking == false)
         {
             anim.SetInteger("animState", 0);
         }
@@ -44,19 +44,25 @@ public class NpcInteraction : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        chatRadius = true;
-        interact.SetActive(true);
-        Debug.Log("YOU HIT ME!");
+        if (other.CompareTag("Player"))
+        {
+            chatRadius = true;
+            interact.SetActive(true);
+            Debug.Log("YOU HIT ME!");
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        chatRadius = false;
-        talking = false;
-        interact.SetActive(false);
-        anim.SetInteger("animState", 0);
-        textField.text = "";
-        Debug.Log("Left Me Hanging");
+        if (other.CompareTag("Player"))
+        {
+            chatRadius = false;
+            talking = false;
+            interact.SetActive(false);
+            anim.SetInteger("animState", 0);
+            textField.text = "";
+            Debug.Log("Left Me Hanging");
+        }
     }
 
     private void Dialogue()
