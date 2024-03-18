@@ -10,11 +10,7 @@ public class WalkSounds : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        groundSoundSource = GetComponent<AudioSource>();
-        if (groundSoundSource == null)
-        {
-            groundSoundSource = gameObject.AddComponent<AudioSource>();
-        }
+        groundSoundSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
         groundSoundSource.clip = groundSFX;
     }
 
@@ -23,6 +19,7 @@ public class WalkSounds : MonoBehaviour
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
 
+        Debug.Log("Collision with " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
             if (moveHorizontal < 0 || moveHorizontal > 0 || moveVertical < 0 || moveVertical > 0)
