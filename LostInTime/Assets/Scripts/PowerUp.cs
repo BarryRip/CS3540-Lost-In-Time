@@ -6,25 +6,23 @@ public class PowerUp : MonoBehaviour
 {
     public int abilityID;
 
+    private CollectableMovement movement;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        movement = GetComponent<CollectableMovement>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !PowerUpManager.HasAbility(abilityID))
         {
+            PowerUpManager.UnlockAbility(abilityID);
+            movement.Disappear();
             Destroy(gameObject, 1);
         }
 
-    }
-
-    private void OnDestroy()
-    {
-        PowerUpManager.UnlockAbility(abilityID);
     }
 
     // Update is called once per frame
