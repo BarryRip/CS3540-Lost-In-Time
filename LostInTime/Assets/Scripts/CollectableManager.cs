@@ -7,7 +7,8 @@ public class CollectableManager : MonoBehaviour
 {
     public static bool[] collectedIds;
     // total assuming 6 parts per world, subject to change
-    public static int totalCollectables = 24;
+    //right now just uses the number for one world
+    public static int totalCollectables = 6;
 
     private static UiTextManager textManager;
 
@@ -34,6 +35,11 @@ public class CollectableManager : MonoBehaviour
             collectedIds[id] = true;
             textManager.SetNotificationText("Got a time machine part!");
             textManager.SetCollectableText("Time Machine Parts: " + GetTotalPartsCollected() + "/6");
+
+            if (GetTotalPartsCollected() == totalCollectables)
+            {
+                textManager.SetNotificationText("You Win!");
+            }
         }
     }
 
