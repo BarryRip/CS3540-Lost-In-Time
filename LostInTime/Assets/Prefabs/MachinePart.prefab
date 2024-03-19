@@ -5047,6 +5047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partID: 0
+  collectSfx: {fileID: 8300000, guid: 14eb66b983ac8ca4c982667440ff255b, type: 3}
 --- !u!114 &4848511309258945094
 MonoBehaviour:
   m_ObjectHideFlags: 0
