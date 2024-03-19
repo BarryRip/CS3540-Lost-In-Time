@@ -491,7 +491,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Machine Parts: 0/6'
+  m_Text: 'Machine Parts: 0/6
+
+    Location1 Parts: 0/2
+
+    Location2 Parts: 0/2
+
+    Location3
+    Parts: 0/2'
 --- !u!222 &219746832
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3569,6 +3576,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 940551838}
+    - target: {fileID: 1920443886128963268, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 70.14
+      objectReference: {fileID: 0}
     - target: {fileID: 2006246625151611738, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
       propertyPath: m_LocalPosition.y
       value: 5.79
