@@ -7,7 +7,7 @@ public class CollectableManager : MonoBehaviour
 {
     public static bool[] collectedIds;
     // total assuming 6 parts per world, subject to change
-    //right now just uses the number for one world
+    public static int CollectablesInWorld = 6;
     public static int totalCollectables = 6;
 
     private static UiTextManager textManager;
@@ -15,7 +15,7 @@ public class CollectableManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        textManager.SetCollectableText("Time Machine Parts: " + GetTotalPartsCollected() + "/6");
+        textManager.SetCollectableText("Time Machine Parts: " + GetTotalPartsCollected() + "/" + CollectablesInWorld);
     }
 
     void Awake()
@@ -34,7 +34,7 @@ public class CollectableManager : MonoBehaviour
         {
             collectedIds[id] = true;
             textManager.SetNotificationText("Got a time machine part!");
-            textManager.SetCollectableText("Time Machine Parts: " + GetTotalPartsCollected() + "/6");
+            textManager.SetCollectableText("Time Machine Parts: " + GetTotalPartsCollected() + "/" + CollectablesInWorld);
 
             if (GetTotalPartsCollected() == totalCollectables)
             {
