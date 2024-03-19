@@ -14,23 +14,20 @@ public class WalkSounds : MonoBehaviour
         groundSoundSource.clip = groundSFX;
     }
 
-    private void OnCollisionStay(Collision collision)
+    public void PlaySfxWhenWalking(GameObject obj)
     {
-        var moveHorizontal = Input.GetAxis("Horizontal");
-        var moveVertical = Input.GetAxis("Vertical");
-
-        Debug.Log("Collision with " + collision.gameObject.name);
-        if (collision.gameObject.CompareTag("Player"))
+        if (obj.CompareTag("Player"))
         {
-            if (moveHorizontal < 0 || moveHorizontal > 0 || moveVertical < 0 || moveVertical > 0)
+            if (!groundSoundSource.isPlaying)
             {
                 groundSoundSource.loop = true;
                 groundSoundSource.Play();
             }
         }
-        else
-        {
-            groundSoundSource.loop = false;
-        }
+    }
+
+    public void StopSfx()
+    {
+        groundSoundSource.Stop();
     }
 }

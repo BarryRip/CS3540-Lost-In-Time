@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float gravity = 9.81f;
     public float airControl = 2f;
+    public AudioClip walkSfx;
 
     Animator anim;
 
     private CharacterController controller;
     private Vector3 movement;
+    private AudioSource walkAudioSource;
 
     private bool hasDoubleJumpCharge;
     // This "wasApplyingGroundingForce" bool is a bit confusing, but
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        walkAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -78,13 +81,20 @@ public class PlayerController : MonoBehaviour
             movement.y = controller.slopeLimit * -GROUNDING_FORCE;
             wasApplyingGroundingForce = true;
             
-            if (Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") < 0 || Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0)
+            if (isMoving())
             {
                 anim.SetInteger("animState", 1);
+                if (!walkAudioSource.isPlaying)
+                {
+                    walkAudioSource.clip = walkSfx;
+                    walkAudioSource.loop = true;
+                    walkAudioSource.Play();
+                }
             }
             else
             {
                 anim.SetInteger("animState", 0);
+                walkAudioSource.Stop();
             }
             
         }
@@ -100,7 +110,14 @@ public class PlayerController : MonoBehaviour
             input *= speed;
             input.y = movement.y;
             movement = Vector3.Lerp(movement, input, airControl * Time.deltaTime);
+            walkAudioSource.Stop();
         }
+    }
+
+    private bool isMoving()
+    {
+        return Input.GetAxis("Horizontal") < 0 || Input.GetAxis("Vertical") < 0
+            || Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Vertical") > 0;
     }
 
     /// <summary>
