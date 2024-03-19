@@ -5,6 +5,7 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     public int partID;
+    public AudioClip collectSfx;
 
     private CollectableMovement movement;
 
@@ -24,6 +25,7 @@ public class Collectable : MonoBehaviour
         if (other.CompareTag("Player") && !CollectableManager.collectedIds[partID])
         {
             CollectableManager.GetPart(partID);
+            AudioSource.PlayClipAtPoint(collectSfx, transform.position);
             movement.Disappear();
             Destroy(gameObject, 1);
         }

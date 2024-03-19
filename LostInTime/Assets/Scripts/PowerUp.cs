@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     public int abilityID;
+    public AudioClip collectSfx;
 
     private CollectableMovement movement;
 
@@ -19,6 +20,7 @@ public class PowerUp : MonoBehaviour
         if (other.CompareTag("Player") && !PowerUpManager.HasAbility(abilityID))
         {
             PowerUpManager.UnlockAbility(abilityID);
+            AudioSource.PlayClipAtPoint(collectSfx, transform.position);
             movement.Disappear();
             Destroy(gameObject, 1);
         }
