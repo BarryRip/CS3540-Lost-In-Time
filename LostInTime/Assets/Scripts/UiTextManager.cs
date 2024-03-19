@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class UiTextManager : MonoBehaviour
 {
-    public Text notifText;
-    public Text collectText;
+    public TextMeshProUGUI notifText;
+    public TextMeshProUGUI collectText;
 
     private bool fadeNotification;
     private Color notifStartColor;
