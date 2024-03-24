@@ -9,15 +9,26 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float gravity = 9.81f;
     public float airControl = 2f;
+    public float slashSpeed = 40f;
+    public float slashTime = 0.5f;
+    public float slashCooldown = 1f;
     public AudioClip walkSfx;
+    public AudioClip slashSfx;
+    public GameObject swordObject;
 
     Animator anim;
 
     private CharacterController controller;
     private Vector3 movement;
     private AudioSource walkAudioSource;
+    private AudioSource slashAudioSource;
 
     private bool hasDoubleJumpCharge;
+    private bool hasSlashCharge;
+    private bool slashOnCooldown;
+    private bool groundedAfterSlash;
+    private bool inSlashingState;
+    private Vector3 slashingDirection;
     // This "wasApplyingGroundingForce" bool is a bit confusing, but
     // essentially, it indicates if a grounding force was applied to
     // the player last frame. Should reset y velocity to 0 if true.
@@ -32,6 +43,9 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         walkAudioSource = GetComponent<AudioSource>();
+        slashAudioSource = gameObject.AddComponent<AudioSource>();
+        slashAudioSource.volume = walkAudioSource.volume;
+        swordObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,9 +56,9 @@ public class PlayerController : MonoBehaviour
         ApplyMovement(input);
         HandleJump();
         ApplyGravity();
+        HandleSlash();
         HandleSteepSlopes();
         controller.Move(Time.deltaTime * movement);
-
     }
 
     private void FixedUpdate()
@@ -65,12 +79,52 @@ public class PlayerController : MonoBehaviour
         return camDirection.normalized;
     }
 
+    private void HandleSlash()
+    {
+        if (controller.isGrounded && !groundedAfterSlash)
+        {
+            // Track when the player is grounded after slashing
+            Debug.Log("1: grounded");
+            groundedAfterSlash = true;
+        }
+        if (groundedAfterSlash && !slashOnCooldown && !hasSlashCharge)
+        {
+            // If the player was grounded after slashing and the cooldown has ended,
+            // the player can slash again
+            Debug.Log("2: slashable again");
+            hasSlashCharge = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && CanSlash() && hasSlashCharge)
+        {
+            // On slash input:
+            Debug.Log("3: slash input");
+            hasSlashCharge = false;
+            groundedAfterSlash = false;
+            slashOnCooldown = true;
+            inSlashingState = true;
+            slashingDirection = CalculateCameraSpaceInput(Vector3.forward);
+            Invoke("EndSlash", slashTime);
+            Invoke("EndSlashCooldown", slashCooldown);
+            swordObject.SetActive(true);
+            slashAudioSource.PlayOneShot(slashSfx);
+            anim.SetInteger("animState", 3);
+        }
+        if (inSlashingState)
+        {
+            Debug.Log("4: in slashing state");
+            // While the player is in the slashing state:
+            transform.LookAt(transform.position + slashingDirection);
+            movement = slashingDirection * slashSpeed;
+        }
+    }
+
     /// <summary>
     /// Applies player movement based on the given input.
     /// </summary>
     /// <param name="input">The world space input direction to move the player towards.</param>
     private void ApplyMovement(Vector3 input)
     {
+        if (inSlashingState) return;
         if (controller.isGrounded)
         {
             // When grounded, player snaps to face the direction we want, and moves forward.
@@ -125,6 +179,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleJump()
     {
+        if (inSlashingState) return;
         if (Input.GetButtonDown("Jump"))
         {
             if (controller.isGrounded)
@@ -148,6 +203,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleSteepSlopes()
     {
+        if (inSlashingState) return;
         if (OnSteepSlope())
         {
             wasApplyingGroundingForce = false;
@@ -181,6 +237,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
+        if (inSlashingState) return;
         movement.y -= gravity * Time.deltaTime;
     }
 
@@ -213,14 +270,32 @@ public class PlayerController : MonoBehaviour
 
     /// <summary>
     /// Check if the player has unlocked the double jump ability.
-    /// <para />
-    /// Currently, this simply returns true. In the future, we should connect
-    /// this to some GameManager script that tracks the powerups collected
-    /// by the player.
     /// </summary>
     /// <returns>True if the player has the double jump ability, false otherwise.</returns>
     private bool CanDoubleJump()
     {
         return PowerUpManager.HasAbility(0);
+    }
+
+    /// <summary>
+    /// Check if the player has unlocked the sword slash ability.
+    /// </summary>
+    /// <returns>True if the player has the sword slash ability, false otherwise.</returns>
+    private bool CanSlash()
+    {
+        return PowerUpManager.HasAbility(1);
+    }
+
+    private void EndSlashCooldown()
+    {
+        slashOnCooldown = false;
+    }
+
+    private void EndSlash()
+    {
+        inSlashingState = false;
+        movement = Vector3.zero;
+        anim.SetInteger("animState", controller.isGrounded ? 0 : 2);
+        swordObject.SetActive(false);
     }
 }
