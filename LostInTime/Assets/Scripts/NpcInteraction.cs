@@ -12,11 +12,8 @@ public class NpcInteraction : MonoBehaviour
     public string[] dialogueLines;
     Animator anim;
     public GameObject interact;
-
     private int currentDialogueIdx;
-
     bool chatRadius = false;
-
     bool talking = false;
 
     private void Start()
@@ -27,7 +24,7 @@ public class NpcInteraction : MonoBehaviour
         interact.SetActive(false);
     }
 
-    private void Update()
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && dialogueLines.Length > 0 && chatRadius)
         {
@@ -65,7 +62,7 @@ public class NpcInteraction : MonoBehaviour
         }
     }
 
-    private void Dialogue()
+    public void Dialogue()
     {
         if (currentDialogueIdx < dialogueLines.Length)
         {
@@ -79,4 +76,7 @@ public class NpcInteraction : MonoBehaviour
 
         }
     }
+
+
+
 }
