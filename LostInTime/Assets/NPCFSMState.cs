@@ -73,7 +73,7 @@ public class NPCFSMState : MonoBehaviour
     {
         print("Patroling!");
 
-        anim.SetInteger("animState", 1);
+        anim.SetInteger("animState", 2);
 
         agent.stoppingDistance = 0;
 
@@ -94,9 +94,8 @@ public class NPCFSMState : MonoBehaviour
 
     void UpdateTalkState()
     {
-        anim.SetInteger("animState", 2);
+        anim.SetInteger("animState", 1);
         interact.Update();
-        deadTransform = gameObject.transform;
     }
 
     void FindNextPoint()
