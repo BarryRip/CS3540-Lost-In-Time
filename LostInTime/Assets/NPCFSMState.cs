@@ -18,28 +18,20 @@ public class NPCFSMState : MonoBehaviour
 
 
     public GameObject player;
-    float distanceToPlayer;
-    bool isdead;
-
+    public float fieldOFView = 45f;
     public float shootRate = 2.0f;
     float elapseTime = 0;
 
-    int health;
     Transform deadTransform;
 
     NavMeshAgent agent;
-
+    private NpcInteraction interact;
     public Transform enemyEyes;
-
-    public float fieldOFView = 45f;
 
     public enum FSMStates
     {
-        Idle,
         Patrol,
-        Chase,
-        Attack,
-        Dead
+        Talk
     }
 
     public FSMStates currentState;
@@ -50,34 +42,25 @@ public class NPCFSMState : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         wanderPoints = GameObject.FindGameObjectsWithTag("Wanderpoint");
         anim = GetComponent<Animator>();
-
-        isdead = false;
+        agent = GetComponent<NavMeshAgent>();
 
         Initialize();
-
-        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         switch (currentState)
         {
             case FSMStates.Patrol:
                 UpdatePatrolState();
                 break;
-            case FSMStates.Dead:
-                UpdateDeadState();
+            case FSMStates.Talk:
+                UpdateTalkState();
                 break;
         }
         elapseTime += Time.deltaTime;
-
-        if (health <= 0)
-        {
-            currentState = FSMStates.Dead;
-        }
     }
 
     void Initialize()
@@ -100,10 +83,6 @@ public class NPCFSMState : MonoBehaviour
         {
             FindNextPoint();
         }
-        else if (IsPlayerInClearFOV())
-        {
-            currentState = FSMStates.Chase;
-        }
 
         FaceTarget(nextDestination);
 
@@ -113,12 +92,11 @@ public class NPCFSMState : MonoBehaviour
 
     
 
-    void UpdateDeadState()
+    void UpdateTalkState()
     {
-        anim.SetInteger("animState", 4);
-        isdead = true;
+        anim.SetInteger("animState", 2);
+        interact.Update();
         deadTransform = gameObject.transform;
-        Destroy(gameObject, 3);
     }
 
     void FindNextPoint()
@@ -136,13 +114,6 @@ public class NPCFSMState : MonoBehaviour
         directionToTarget.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(directionToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10 * Time.deltaTime);
-    }
-
-
-
-    private void OnDestroy()
-    {
-        Instantiate(deadVFX, deadTransform.position, deadTransform.rotation);
     }
 
 
