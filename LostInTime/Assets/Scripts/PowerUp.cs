@@ -12,6 +12,12 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Despawn powerup if already collected
+        if (PowerUpManager.HasAbility(abilityID))
+        {
+            gameObject.SetActive(false);
+        }
+
         movement = GetComponent<CollectableMovement>();
     }
 

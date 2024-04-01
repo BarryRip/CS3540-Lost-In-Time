@@ -5,16 +5,12 @@ using UnityEngine.UI;
 
 public class PowerUpManager : MonoBehaviour
 {
-    private static UiTextManager textManager;
-    private static bool[] collectedIds;
     public static string[] collectedNames;
 
     // Start is called before the first frame update
     void Awake()
     {
-        collectedIds = new bool[4];
         collectedNames = new string[] { "Pegasus Boots", "Samurai Sword", "BB Gun", "X-Ray Goggles"};
-        textManager = GetComponent<UiTextManager>();
     }
 
     // Update is called once per frame
@@ -25,27 +21,38 @@ public class PowerUpManager : MonoBehaviour
 
     public static bool HasAbility(int id)
     {
-        if (collectedIds.Length <= id)
+        if (GetCollectedIds().Length <= id)
         {
             Debug.Log("Tried to check for invalid ability");
             return false;
         }
         else
         {
-            return collectedIds[id];
+            return GetCollectedIds()[id];
         }
     }
 
     public static void UnlockAbility(int id)
     {
-        if (collectedIds.Length <= id)
+        if (GetCollectedIds().Length <= id)
         {
             Debug.Log("Tried to unlock invalid ability");
         }
         else
         {
-            collectedIds[id] = true;
-            textManager.SetNotificationText("Unlocked " + collectedNames[id]);
+            GameManager.instance.collectedPowerups[id] = true;
+            SetText("Unlocked " + collectedNames[id]);
         }
+    }
+
+    private static void SetText(string msg)
+    {
+        UiTextManager textManager = FindObjectOfType<UiTextManager>();
+        textManager.SetNotificationText(msg);
+    }
+
+    private static bool[] GetCollectedIds()
+    {
+        return GameManager.instance.collectedPowerups;
     }
 }

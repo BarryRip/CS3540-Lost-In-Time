@@ -5,9 +5,8 @@ using TMPro;
 
 public class UiTextManager : MonoBehaviour
 {
-    public TextMeshProUGUI notifText;
-    public TextMeshProUGUI collectText;
-
+    private TextMeshProUGUI notifText;
+    private TextMeshProUGUI collectText;
     private bool fadeNotification;
     private Color notifStartColor;
     private Color notifEndColor;
@@ -16,6 +15,8 @@ public class UiTextManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        notifText = GameObject.FindGameObjectWithTag("NotificationText").GetComponent<TextMeshProUGUI>();
+        collectText = GameObject.FindGameObjectWithTag("CollectableText").GetComponent<TextMeshProUGUI>();
         notifStartColor = notifText.color;
         notifEndColor = new Color(notifText.color.r, notifText.color.g, notifText.color.b, 0f);
         notifText.color = notifEndColor;

@@ -84,20 +84,17 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded && !groundedAfterSlash)
         {
             // Track when the player is grounded after slashing
-            Debug.Log("1: grounded");
             groundedAfterSlash = true;
         }
         if (groundedAfterSlash && !slashOnCooldown && !hasSlashCharge)
         {
             // If the player was grounded after slashing and the cooldown has ended,
             // the player can slash again
-            Debug.Log("2: slashable again");
             hasSlashCharge = true;
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanSlash() && hasSlashCharge)
         {
             // On slash input:
-            Debug.Log("3: slash input");
             hasSlashCharge = false;
             groundedAfterSlash = false;
             slashOnCooldown = true;
@@ -111,7 +108,6 @@ public class PlayerController : MonoBehaviour
         }
         if (inSlashingState)
         {
-            Debug.Log("4: in slashing state");
             // While the player is in the slashing state:
             transform.LookAt(transform.position + slashingDirection);
             movement = slashingDirection * slashSpeed;
