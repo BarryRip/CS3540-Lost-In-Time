@@ -98,15 +98,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 493054, guid: 3827052637b90d34087ce42945162d23, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 100.23
+      value: -64.764
       objectReference: {fileID: 0}
     - target: {fileID: 493054, guid: 3827052637b90d34087ce42945162d23, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.50000095
+      value: 345.954
       objectReference: {fileID: 0}
     - target: {fileID: 493054, guid: 3827052637b90d34087ce42945162d23, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -103.08
+      value: 349.463
       objectReference: {fileID: 0}
     - target: {fileID: 493054, guid: 3827052637b90d34087ce42945162d23, type: 3}
       propertyPath: m_LocalRotation.w
@@ -139,7 +139,7 @@ PrefabInstance:
     - target: {fileID: 9548500, guid: 3827052637b90d34087ce42945162d23, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 1d561ab794bc05b44aa243d39691c790, type: 3}
+      objectReference: {fileID: 9000000, guid: 2ba66718d3169ae42a05d8facf302228, type: 3}
     - target: {fileID: 9548500, guid: 3827052637b90d34087ce42945162d23, type: 3}
       propertyPath: m_Controller
       value: 
@@ -162,6 +162,10 @@ PrefabInstance:
         'Neck'\n\tand more ...\n\tFrom animation clip 'mixamo.com'\n\tFrom animation
         clip 'mixamo.com'\n\tFrom animation clip 'mixamo.com'"
       objectReference: {fileID: 0}
+    - target: {fileID: 9548500, guid: 3827052637b90d34087ce42945162d23, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -178,6 +182,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 145716, guid: 3827052637b90d34087ce42945162d23, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1876813885310193614}
+    - targetCorrespondingSourceObject: {fileID: 145716, guid: 3827052637b90d34087ce42945162d23, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6664249517487129183}
+    - targetCorrespondingSourceObject: {fileID: 145716, guid: 3827052637b90d34087ce42945162d23, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6571057713555862105}
+    - targetCorrespondingSourceObject: {fileID: 145716, guid: 3827052637b90d34087ce42945162d23, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5947677518726652996}
   m_SourcePrefab: {fileID: 100100000, guid: 3827052637b90d34087ce42945162d23, type: 3}
 --- !u!1 &5079215614761591795 stripped
 GameObject:
@@ -200,7 +213,8 @@ MonoBehaviour:
   talkSFX: {fileID: 8300000, guid: 009510bfb6aadcd49be7bc8a58b5e28f, type: 3}
   dialogueLines:
   - Well HELLLLLLLLLLLLLLLLLO Young Traveler
-  - Machine Parts are cool
+  - Explore the area that you can, the wall surrounding us protects us from the wildlife
+    outisde.
   interact: {fileID: 1149972382889808938}
 --- !u!143 &8966068422107611228
 CharacterController:
@@ -243,13 +257,80 @@ MonoBehaviour:
   wanderPoints:
   - {fileID: 0}
   - {fileID: 0}
-  NPCSpeed: 5
+  NPCSpeed: 2
   chaseDistance: 5
   player: {fileID: 0}
   fieldOFView: 45
   shootRate: 2
   enemyEyes: {fileID: 5079215614761768897}
   currentState: 0
+--- !u!136 &6664249517487129183
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079215614761591795}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!195 &6571057713555862105
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079215614761591795}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!64 &5947677518726652996
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079215614761591795}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &5079215614761768897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 478470, guid: 3827052637b90d34087ce42945162d23, type: 3}

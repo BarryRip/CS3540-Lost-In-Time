@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.AI;
 
 public class NpcInteraction : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class NpcInteraction : MonoBehaviour
     private int currentDialogueIdx;
     bool chatRadius = false;
     bool talking = false;
+    NPCFSMState fsm;
+    NavMeshAgent agent;
 
     private void Start()
     {
@@ -22,6 +25,7 @@ public class NpcInteraction : MonoBehaviour
         anim = GetComponent<Animator>();
         anim.SetInteger("animState", 0);
         interact.SetActive(false);
+        fsm = GetComponent<NPCFSMState>();
     }
 
     public void Update()
@@ -30,12 +34,13 @@ public class NpcInteraction : MonoBehaviour
         {
             Dialogue();
             anim.SetInteger("animState", 1);
+            fsm.FaceTarget(gameObject.transform.position);
             talking = true;
         }
 
         if (talking == false)
         {
-            anim.SetInteger("animState", 0);
+            anim.SetInteger("animState", 2);
         }
     }
 
@@ -45,11 +50,12 @@ public class NpcInteraction : MonoBehaviour
         {
             chatRadius = true;
             interact.SetActive(true);
+            fsm.FaceTarget(gameObject.transform.position);
             Debug.Log("YOU HIT ME!");
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
