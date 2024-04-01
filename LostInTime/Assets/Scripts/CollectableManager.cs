@@ -15,17 +15,14 @@ public class CollectableManager : MonoBehaviour
     public static int Type3NumberCollectables = 2;
     public static int Type3Requried = 1;
 
-    public static bool[] collectedIds;
     // total assuming 6 parts per world, subject to change
     public static int CollectablesInWorld = 6;
     public static int TotalCollectables = 6;
 
-    private static UiTextManager textManager;
-
     // Start is called before the first frame update
     private void Start()
     {
-        textManager.SetCollectableText(GenerateText());
+        SetCollectText(GenerateText());
     }
 
     private static string GenerateText()
@@ -37,29 +34,35 @@ public class CollectableManager : MonoBehaviour
             "Total Collected: " + GetTotalPartsCollected();
     }
 
-    void Awake()
-    {
-        textManager = GetComponent<UiTextManager>();
-        collectedIds = new bool[TotalCollectables];
-    }
-
     public static void GetPart(int id)
     {
-        if (collectedIds.Length <= id)
+        if (GetCollectedIds().Length <= id)
         {
             Debug.Log("Tried to get invalid part");
         }
         else
         {
-            collectedIds[id] = true;
-            textManager.SetNotificationText("Got a time machine part!");
-            textManager.SetCollectableText(GenerateText());
+            GameManager.instance.collectedParts[id] = true;
+            SetNotifText("Got a time machine part!");
+            SetCollectText(GenerateText());
 
             if (HasPartsRequired())
             {
-                textManager.SetNotificationText("You Win!");
+                SetNotifText("You Win!");
             }
         }
+    }
+
+    private static void SetNotifText(string msg)
+    {
+        UiTextManager textManager = FindObjectOfType<UiTextManager>();
+        textManager.SetNotificationText(msg);
+    }
+
+    private static void SetCollectText(string msg)
+    {
+        UiTextManager textManager = FindObjectOfType<UiTextManager>();
+        textManager.SetCollectableText(msg);
     }
 
     private static bool HasPartsRequired()
@@ -72,21 +75,26 @@ public class CollectableManager : MonoBehaviour
 
     private static int GetTotalPartsCollected()
     {
-        return Array.FindAll(collectedIds, (bool x) => { return x; }).Length;
+        return Array.FindAll(GetCollectedIds(), (bool x) => { return x; }).Length;
     }
 
     private static int GetTotalPartsType1()
     {
-        return Array.FindAll(new ArraySegment<bool>(collectedIds, 0, Type1NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), 0, Type1NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
     }
 
     private static int GetTotalPartsType2()
     {
-        return Array.FindAll(new ArraySegment<bool>(collectedIds, Type1NumberCollectables, Type2NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables, Type2NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
     }
 
     private static int GetTotalPartsType3()
     {
-        return Array.FindAll(new ArraySegment<bool>(collectedIds, Type1NumberCollectables + Type2NumberCollectables, Type3NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables + Type2NumberCollectables, Type3NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+    }
+
+    private static bool[] GetCollectedIds()
+    {
+        return GameManager.instance.collectedParts;
     }
 }

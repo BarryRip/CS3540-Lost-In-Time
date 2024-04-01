@@ -13,7 +13,7 @@ public class Collectable : MonoBehaviour
     void Start()
     {
         // Despawn collectable on load if it was already collected
-        if (CollectableManager.collectedIds[partID])
+        if (GameManager.instance.collectedParts[partID])
         {
             gameObject.SetActive(false);
         }
@@ -22,7 +22,7 @@ public class Collectable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !CollectableManager.collectedIds[partID])
+        if (other.CompareTag("Player") && !GameManager.instance.collectedParts[partID])
         {
             CollectableManager.GetPart(partID);
             AudioSource.PlayClipAtPoint(collectSfx, transform.position);
