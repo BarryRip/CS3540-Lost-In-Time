@@ -19,7 +19,6 @@ public class NPCFSMState : MonoBehaviour
 
     public GameObject player;
     public float fieldOFView = 45f;
-    public float shootRate = 2.0f;
     float elapseTime = 0;
 
     Transform deadTransform;
@@ -72,16 +71,22 @@ public class NPCFSMState : MonoBehaviour
     void UpdatePatrolState()
     {
         print("Patroling!");
-
         anim.SetInteger("animState", 2);
 
         agent.stoppingDistance = 0;
 
-        agent.speed = 3.5f;
+        agent.speed = 2f;
 
         if (Vector3.Distance(transform.position, nextDestination) < 1)
         {
             FindNextPoint();
+
+        } else if (Input.GetKeyDown(KeyCode.E) || IsPlayerInClearFOV())
+        {
+            anim.SetInteger("animState", 0);
+            FaceTarget(player.transform.position);
+            currentState = FSMStates.Talk;
+            agent.speed = 0;
         }
 
         FaceTarget(nextDestination);
@@ -95,7 +100,12 @@ public class NPCFSMState : MonoBehaviour
     void UpdateTalkState()
     {
         anim.SetInteger("animState", 1);
-        interact.Update();
+        agent.speed = 0;
+        FaceTarget(player.transform.position);
+        if (!IsPlayerInClearFOV())
+        {
+            currentState = FSMStates.Patrol;
+        }
     }
 
     void FindNextPoint()
@@ -107,7 +117,7 @@ public class NPCFSMState : MonoBehaviour
         agent.SetDestination(nextDestination);
     }
 
-    void FaceTarget(Vector3 target)
+    public void FaceTarget(Vector3 target)
     {
         Vector3 directionToTarget = (target - transform.position).normalized;
         directionToTarget.y = 0;
@@ -141,6 +151,7 @@ public class NPCFSMState : MonoBehaviour
                 if (hit.collider.CompareTag("Player"))
                 {
                     print("Player in sight!");
+                    agent.speed = 0f;
                     return true;
                 }
                 return false;
