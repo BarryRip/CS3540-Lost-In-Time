@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Poli2hedLevel.unity
     guid: 3daac010bfcabf8488fd26e93e0dbc04
+  - enabled: 1
+    path: Assets/Scenes/SamuraiDebug/Dojo.unity
+    guid: 786d7109ac0c0b84d87a557473147f14
   m_configObjects: {}
