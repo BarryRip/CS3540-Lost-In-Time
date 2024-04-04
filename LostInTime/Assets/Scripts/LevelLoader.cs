@@ -4,8 +4,12 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour
 {
     public string sceneToLoad; // Name of the scene to load
-    public Transform player;
-    public Transform newPlayerLocation;
+    [Header("Check this option if you are overriding the spawn as indicated below.")]
+    public bool overridePlayerSpawnLocation = false;
+    [Header("newPlayerLocation should be the location in the scene that will be loaded.\n" +
+        "An easy way to do this is to copy the position component from a game\n" +
+        "object in that scene and paste it into this field.")]
+    public Vector3 newPlayerLocation;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,10 +21,11 @@ public class LevelLoader : MonoBehaviour
 
     private void LoadScene()
     {
-        SceneManager.LoadScene(sceneToLoad);
-        if (player != null && newPlayerLocation != null)
+        if (overridePlayerSpawnLocation)
         {
-            player.position = newPlayerLocation.position;
+            GameManager.SetLoadingPosition(newPlayerLocation);
         }
+        SceneManager.LoadScene(sceneToLoad);
+        
     }
 }
