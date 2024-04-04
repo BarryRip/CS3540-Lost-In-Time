@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VoidOut : MonoBehaviour
 {
+    public AudioClip voidSfx;
+    public string voidMessage;
     Vector3 spawnPoint;
 
     // Start is called before the first frame update
@@ -24,6 +26,9 @@ public class VoidOut : MonoBehaviour
         {
             PlayerController pc = other.GetComponent<PlayerController>();
             pc.TeleportTo(spawnPoint);
+            AudioSource.PlayClipAtPoint(voidSfx, spawnPoint, 0.3f);
+            UiTextManager textManager = FindObjectOfType<UiTextManager>();
+            textManager.SetNotificationText(voidMessage);
         }
     }
 }
