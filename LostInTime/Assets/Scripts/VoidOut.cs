@@ -22,7 +22,8 @@ public class VoidOut : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.transform.position = spawnPoint;
+            PlayerController pc = other.GetComponent<PlayerController>();
+            pc.TeleportTo(spawnPoint);
         }
     }
 }

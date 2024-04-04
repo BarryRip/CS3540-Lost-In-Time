@@ -66,6 +66,13 @@ public class PlayerController : MonoBehaviour
         UpdateStatusWhenGrounded();
     }
 
+    public void TeleportTo(Vector3 position)
+    {
+        controller.enabled = false;
+        transform.position = position;
+        controller.enabled = true;
+    }
+
     /// <summary>
     /// Calculates the world space direction of the given input applied to the
     /// camera's world space.
