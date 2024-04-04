@@ -8,6 +8,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public bool debugMode = false;
     [HideInInspector]
     public bool[] collectedParts;
     [HideInInspector]
@@ -25,5 +26,12 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         collectedParts = new bool[24];
         collectedPowerups = new bool[4];
+        if (debugMode)
+        {
+            for (int i = 0; i < collectedPowerups.Length; i++)
+            {
+                collectedPowerups[i] = true;
+            }
+        }
     }
 }

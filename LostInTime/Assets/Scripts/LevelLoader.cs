@@ -18,6 +18,9 @@ public class LevelLoader : MonoBehaviour
     private void LoadScene()
     {
         SceneManager.LoadScene(sceneToLoad);
-        player.position = newPlayerLocation.position;
+        if (player != null && newPlayerLocation != null)
+        {
+            player.position = newPlayerLocation.position;
+        }
     }
 }
