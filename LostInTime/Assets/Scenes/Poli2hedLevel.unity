@@ -39662,15 +39662,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3399497840966505165, guid: 8c8625d94ef629844b6accd76707061d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -62.75
+      value: -73.3
       objectReference: {fileID: 0}
     - target: {fileID: 3399497840966505165, guid: 8c8625d94ef629844b6accd76707061d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 397.88
+      value: 375.26
       objectReference: {fileID: 0}
     - target: {fileID: 3399497840966505165, guid: 8c8625d94ef629844b6accd76707061d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 307.98
+      value: 228.3
       objectReference: {fileID: 0}
     - target: {fileID: 3399497840966505165, guid: 8c8625d94ef629844b6accd76707061d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -63113,15 +63113,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5885128354507415616, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -62.75
+      value: -73.3
       objectReference: {fileID: 0}
     - target: {fileID: 5885128354507415616, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 401.9
+      value: 379.28
       objectReference: {fileID: 0}
     - target: {fileID: 5885128354507415616, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 304.6
+      value: 224.92
       objectReference: {fileID: 0}
     - target: {fileID: 5885128354507415616, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -63141,15 +63141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6160820900958370342, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -62.75
+      value: -73.3
       objectReference: {fileID: 0}
     - target: {fileID: 6160820900958370342, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 401.9
+      value: 379.28
       objectReference: {fileID: 0}
     - target: {fileID: 6160820900958370342, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 304.6
+      value: 224.92
       objectReference: {fileID: 0}
     - target: {fileID: 7233789786272111401, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -63161,11 +63161,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7233789786272111401, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000029487909
+      value: -0.000000029487905
       objectReference: {fileID: 0}
     - target: {fileID: 7233789786272111401, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000012491736
+      value: 0.000000012491735
       objectReference: {fileID: 0}
     - target: {fileID: 8208251977524119973, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_Follow
@@ -71870,6 +71870,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Dojo
+  player: {fileID: 0}
+  newPlayerLocation: {fileID: 0}
 --- !u!1001 &4628779319595378250
 PrefabInstance:
   m_ObjectHideFlags: 0

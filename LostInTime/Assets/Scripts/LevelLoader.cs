@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour
 {
     public string sceneToLoad; // Name of the scene to load
+    public Transform player;
+    public Transform newPlayerLocation;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,5 +18,6 @@ public class LevelLoader : MonoBehaviour
     private void LoadScene()
     {
         SceneManager.LoadScene(sceneToLoad);
+        player.position = newPlayerLocation.position;
     }
 }
