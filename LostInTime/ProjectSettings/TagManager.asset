@@ -8,6 +8,8 @@ TagManager:
   - Platform
   - CollectableText
   - NotificationText
+  - Void
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Cloud Layer
   - 
   - 
   - 
