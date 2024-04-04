@@ -46,6 +46,10 @@ public class PlayerController : MonoBehaviour
         slashAudioSource = gameObject.AddComponent<AudioSource>();
         slashAudioSource.volume = walkAudioSource.volume;
         swordObject.SetActive(false);
+        if (GameManager.ShouldOverridePlayerSpawn())
+        {
+            TeleportTo(GameManager.GetLoadingPosition());
+        }
     }
 
     // Update is called once per frame
