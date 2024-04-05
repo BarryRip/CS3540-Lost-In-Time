@@ -156,7 +156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550168076195024687}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3900668, y: 0.00000004028121, z: -0.000000017064067, w: 0.92078656}
+  m_LocalRotation: {x: 0.39006677, y: 0.000000029487891, z: -0.000000012491763, w: 0.92078656}
   m_LocalPosition: {x: 466.71, y: 9.91, z: -35.600002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 6160820900958370342}
   - component: {fileID: 8208251977524119973}
   - component: {fileID: 1972970453923599020}
+  - component: {fileID: 5489473602479322874}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -980,6 +981,18 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!114 &5489473602479322874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403941924261825699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 975227b7c80b26b4780c5c6b97623749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7560444587769678931
 GameObject:
   m_ObjectHideFlags: 3

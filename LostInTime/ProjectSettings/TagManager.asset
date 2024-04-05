@@ -12,6 +12,7 @@ TagManager:
   - SpawnPoint
   - FetchQuestSystem
   - Gate
+  - CameraAnchor
   layers:
   - Default
   - TransparentFX

@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         collectedParts = new bool[24];
         collectedPowerups = new bool[4];
+    }
+
+    private void Update()
+    {
         if (debugMode)
         {
             for (int i = 0; i < collectedPowerups.Length; i++)
