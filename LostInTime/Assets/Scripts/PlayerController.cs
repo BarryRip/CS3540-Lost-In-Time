@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
     private AudioSource walkAudioSource;
     private AudioSource slashAudioSource;
+    private GameObject slashIndicator;
 
     private bool hasDoubleJumpCharge;
     private bool hasSlashCharge;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         walkAudioSource = GetComponent<AudioSource>();
         slashAudioSource = gameObject.AddComponent<AudioSource>();
         slashAudioSource.volume = walkAudioSource.volume;
+        slashIndicator = GameObject.FindGameObjectWithTag("SlashIndicator");
         swordObject.SetActive(false);
         xRayPlatforms = GameObject.FindGameObjectsWithTag("XRayPlatform");
         ToggleXRayPlatforms(false);
@@ -128,7 +130,21 @@ public class PlayerController : MonoBehaviour
             // the player can slash again
             hasSlashCharge = true;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && CanSlash() && hasSlashCharge)
+        if (Input.GetKey(KeyCode.LeftShift) && CanSlash() && hasSlashCharge)
+        {
+            slashIndicator.SetActive(true);
+            Vector3 slashDir = slashIndicator.transform.position - transform.position;
+            slashDir.y = 0;
+            slashDir.Normalize();
+            slashIndicator.transform.position = transform.position + (slashDir * 22f);
+            Vector3 rotation = slashIndicator.transform.rotation.eulerAngles;
+            slashIndicator.transform.rotation = Quaternion.Euler(0f, rotation.y, rotation.z);
+        }
+        else
+        {
+            slashIndicator.SetActive(false);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift) && CanSlash() && hasSlashCharge)
         {
             // On slash input:
             hasSlashCharge = false;
@@ -170,7 +186,7 @@ public class PlayerController : MonoBehaviour
             if (isMoving())
             {
                 anim.SetInteger("animState", 1);
-                if (!walkAudioSource.isPlaying)
+                if (!walkAudioSource.isPlaying && walkSfx != null)
                 {
                     walkAudioSource.clip = walkSfx;
                     walkAudioSource.loop = true;
