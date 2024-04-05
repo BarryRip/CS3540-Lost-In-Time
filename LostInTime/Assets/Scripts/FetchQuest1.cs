@@ -32,7 +32,7 @@ public class FetchQuest1 : FetchQuest
     }
 
 
-    public void PickUp()
+    override public void PickUp()
     {
         fetchable.PickUp();
     }

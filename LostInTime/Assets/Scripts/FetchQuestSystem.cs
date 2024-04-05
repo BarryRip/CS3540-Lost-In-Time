@@ -32,6 +32,7 @@ public abstract class FetchQuest : MonoBehaviour
     }
 
     public abstract void OnCompletion();
+    public abstract void PickUp();
 }
 
 public class FetchQuestSystem : MonoBehaviour

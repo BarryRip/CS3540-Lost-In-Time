@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CollectableManager : MonoBehaviour
 {
+    public int index;
+    public static int offset;
     public static string Type1Name = "Time Machine Part Type 1";
     public static int Type1NumberCollectables = 2;
     public static int Type1Requried = 1;
@@ -22,6 +25,7 @@ public class CollectableManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        offset = index;
         SetCollectText(GenerateText());
     }
 
@@ -80,17 +84,17 @@ public class CollectableManager : MonoBehaviour
 
     private static int GetTotalPartsType1()
     {
-        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), 0, Type1NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), 0 + offset, Type1NumberCollectables + offset).ToArray(), (bool x) => { return x; }).Length;
     }
 
     private static int GetTotalPartsType2()
     {
-        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables, Type2NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables + offset, Type1NumberCollectables + Type2NumberCollectables + offset).ToArray(), (bool x) => { return x; }).Length;
     }
 
     private static int GetTotalPartsType3()
     {
-        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables + Type2NumberCollectables, Type3NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables + offset + Type2NumberCollectables, Type1NumberCollectables + offset + Type2NumberCollectables + Type3NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
     }
 
     private static bool[] GetCollectedIds()

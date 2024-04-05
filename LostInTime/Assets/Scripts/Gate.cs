@@ -5,10 +5,9 @@ using System.Linq;
 
 public class Gate : MonoBehaviour
 {
-    public static GameObject gate;
-
     public static void MoveGate()
     {
+        GameObject gate = GameObject.FindGameObjectWithTag("Gate");
         gate.transform.position = new Vector3(gate.transform.position.x, gate.transform.position.y - 100, gate.transform.position.z);
     }
 }
