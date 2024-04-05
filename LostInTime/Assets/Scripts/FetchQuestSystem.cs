@@ -6,38 +6,44 @@ using System.Linq;
 
 abstract public class Fetchable
 {
-    public abstract bool fulfilledRequirements();
+    public abstract bool FulfilledRequirements();
+    public abstract void PickUp();
 }
 
-public class FetchQuest : MonoBehaviour
+public abstract class FetchQuest : MonoBehaviour
 {
     public int id;
     public string QuestName;
     public string QuestDiscription;
-    Fetchable fetchable;
+    public Fetchable fetchable;
+    public FetchQuestSystem fqs;
 
-    public bool fulfilledRequirements()
+    public bool FulfilledRequirements()
     {
-        return fetchable.fulfilledRequirements();
+        return fetchable.FulfilledRequirements();
     }
+
+    public void TurnIn()
+    {
+        fqs.unlocked.Remove(this);
+        fqs.completed.Add(this);
+
+        OnCompletion();
+    }
+
+    public abstract void OnCompletion();
 }
 
 public class FetchQuestSystem : MonoBehaviour
 {
-    List<FetchQuest> unlocked;
-    List<FetchQuest> invisible_locked;
-    List<FetchQuest> visible_locked;
-    List<FetchQuest> completed;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<FetchQuest> unlocked;
+    public List<FetchQuest> invisible_locked;
+    public List<FetchQuest> visible_locked;
+    public List<FetchQuest> completed;
 
     public void TryToCompleteFetchQuest(FetchQuest quest)
     {
-        if (quest.fulfilledRequirements())
+        if (quest.FulfilledRequirements())
         {
             CompleteFetchQuest(quest);
         }
@@ -65,7 +71,7 @@ public class FetchQuestSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("attempted to turn in quest that was not unlocked, id: " +quest.id);
+            //Debug.Log("attempted to turn in quest that was not unlocked, id: " +quest.id);
             //Should never happen not sure whether to print debug or throw error
         }
     }
