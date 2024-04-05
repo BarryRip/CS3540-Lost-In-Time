@@ -34,13 +34,13 @@ public class NpcInteraction : MonoBehaviour
         {
             Dialogue();
             anim.SetInteger("animState", 1);
-            fsm.FaceTarget(gameObject.transform.position);
+            FaceTarget();
             talking = true;
         }
 
         if (talking == false)
         {
-            anim.SetInteger("animState", 2);
+            anim.SetInteger("animState", fsm == null ? 0 : 2);
         }
     }
 
@@ -50,7 +50,7 @@ public class NpcInteraction : MonoBehaviour
         {
             chatRadius = true;
             interact.SetActive(true);
-            fsm.FaceTarget(gameObject.transform.position);
+            FaceTarget();
             Debug.Log("YOU HIT ME!");
         }
     }
@@ -83,6 +83,12 @@ public class NpcInteraction : MonoBehaviour
         }
     }
 
-
+    private void FaceTarget()
+    {
+        if (fsm != null)
+        {
+            fsm.FaceTarget(gameObject.transform.position);
+        }
+    }
 
 }
