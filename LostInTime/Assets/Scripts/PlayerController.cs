@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
         slashAudioSource = gameObject.AddComponent<AudioSource>();
         slashAudioSource.volume = walkAudioSource.volume;
         slashIndicator = GameObject.FindGameObjectWithTag("SlashIndicator");
+        slashIndicator.SetActive(false);
         swordObject.SetActive(false);
         xRayPlatforms = GameObject.FindGameObjectsWithTag("XRayPlatform");
         ToggleXRayPlatforms(false);
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PauseMenu.isGamePaused)
+        if (PauseMenu.isGamePaused || GameManager.instance.inCutscene)
         {
             walkAudioSource.Stop();
             return;

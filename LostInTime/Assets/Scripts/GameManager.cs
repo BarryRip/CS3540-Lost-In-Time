@@ -13,15 +13,19 @@ public class GameManager : MonoBehaviour
     public bool[] collectedParts;
     [HideInInspector]
     public bool[] collectedPowerups;
+    [HideInInspector]
+    public bool inCutscene;
+
 
     // Location to spawn in when a level is loaded
     private static Vector3 positionToSpawnIn;
     // Flag to set when the player should load into a level in a specific location
     private static bool repositionWhenSpawningIn;
 
-    private static float mouseSensitivityModifier = 1f;
+    private float mouseSensitivityModifier;
     private static float baseXAxisSpeed = 1f;
     private static float baseYAxisSpeed = 0.01f;
+    private Dictionary<string, bool> flagDict;
 
     private void Awake()
     {
@@ -35,6 +39,8 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
         collectedParts = new bool[24];
         collectedPowerups = new bool[4];
+        mouseSensitivityModifier = 1f;
+        flagDict = new Dictionary<string, bool>();
     }
 
     private void Update()
@@ -88,6 +94,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int GetCurrentMouseValue()
+    {
+        return (int)(mouseSensitivityModifier * 5);
+    }
+
     public float GetMouseXSpeed()
     {
         return mouseSensitivityModifier * baseXAxisSpeed;
@@ -96,5 +107,25 @@ public class GameManager : MonoBehaviour
     public float GetMouseYSpeed()
     {
         return mouseSensitivityModifier * baseYAxisSpeed;
+    }
+
+    public bool GetFlag(string key)
+    {
+        if (key == null || key.Equals(""))
+        {
+            Debug.LogWarning("Tried to get a flag with no key name from GameManager.");
+            return false;
+        }
+        return flagDict.ContainsKey(key) && flagDict[key];
+    }
+
+    public void SetFlag(string key)
+    {
+        if (key == null || key.Equals(""))
+        {
+            Debug.LogWarning("Tried to set a flag under a null or empty key name for the GameManager.");
+            return;
+        }
+        flagDict.Add(key, true);
     }
 }

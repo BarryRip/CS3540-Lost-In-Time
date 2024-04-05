@@ -459,17 +459,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5acec7b157649344f980ddabde87d6f2, type: 3}
---- !u!114 &288921553 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6735237655831917861, guid: 5acec7b157649344f980ddabde87d6f2, type: 3}
-  m_PrefabInstance: {fileID: 288921552}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79af3b5ba76837346a81b60adb176965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &315661883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2315,6 +2304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1759036125}
   - component: {fileID: 1759036126}
+  - component: {fileID: 1759036127}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -2395,9 +2385,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 288921553}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SetMouseSensitivity
+      - m_Target: {fileID: 1759036127}
+        m_TargetAssemblyTypeName: SensitivityChanger, Assembly-CSharp
+        m_MethodName: SetSensitivity
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2407,6 +2397,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1759036127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759036124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a50d7b67d731324b96e7f6c46d248be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1789733313
 GameObject:
   m_ObjectHideFlags: 0
