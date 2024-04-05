@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public float slashCooldown = 1f;
     public AudioClip walkSfx;
     public AudioClip slashSfx;
+    public AudioClip xrayOnSfx;
+    public AudioClip xrayOffSfx;
     public GameObject swordObject;
 
     Animator anim;
@@ -29,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private bool groundedAfterSlash;
     private bool inSlashingState;
     private Vector3 slashingDirection;
+    private bool isGogglesActive;
+    private GameObject[] xRayPlatforms;
     // This "wasApplyingGroundingForce" bool is a bit confusing, but
     // essentially, it indicates if a grounding force was applied to
     // the player last frame. Should reset y velocity to 0 if true.
@@ -46,6 +50,8 @@ public class PlayerController : MonoBehaviour
         slashAudioSource = gameObject.AddComponent<AudioSource>();
         slashAudioSource.volume = walkAudioSource.volume;
         swordObject.SetActive(false);
+        xRayPlatforms = GameObject.FindGameObjectsWithTag("XRayPlatform");
+        ToggleXRayPlatforms(false);
         if (GameManager.ShouldOverridePlayerSpawn())
         {
             TeleportTo(GameManager.GetLoadingPosition());
@@ -61,6 +67,7 @@ public class PlayerController : MonoBehaviour
         HandleJump();
         ApplyGravity();
         HandleSlash();
+        HandleGoggles();
         HandleSteepSlopes();
         controller.Move(Time.deltaTime * movement);
     }
@@ -88,6 +95,18 @@ public class PlayerController : MonoBehaviour
         Vector3 camDirection = Camera.main.transform.TransformDirection(input);
         camDirection.y = 0;
         return camDirection.normalized;
+    }
+
+    private void HandleGoggles()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl) && CanUseGoggles())
+        {
+            isGogglesActive = !isGogglesActive;
+            XRayTintBehavior tintBehavior = FindObjectOfType<XRayTintBehavior>();
+            tintBehavior.SetTintActive(isGogglesActive);
+            AudioSource.PlayClipAtPoint(isGogglesActive ? xrayOnSfx : xrayOffSfx, transform.position);
+            ToggleXRayPlatforms(isGogglesActive);
+        }
     }
 
     private void HandleSlash()
@@ -293,6 +312,15 @@ public class PlayerController : MonoBehaviour
         return PowerUpManager.HasAbility(1);
     }
 
+    /// <summary>
+    /// Check if the player has unlocked the x ray goggles ability.
+    /// </summary>
+    /// <returns>True if the player has the goggles ability, false otherwise.</returns>
+    private bool CanUseGoggles()
+    {
+        return PowerUpManager.HasAbility(2);
+    }
+
     private void EndSlashCooldown()
     {
         slashOnCooldown = false;
@@ -304,5 +332,13 @@ public class PlayerController : MonoBehaviour
         movement = Vector3.zero;
         anim.SetInteger("animState", controller.isGrounded ? 0 : 2);
         swordObject.SetActive(false);
+    }
+
+    private void ToggleXRayPlatforms(bool toggle)
+    {
+        foreach (GameObject obj in xRayPlatforms)
+        {
+            obj.SetActive(toggle);
+        }
     }
 }

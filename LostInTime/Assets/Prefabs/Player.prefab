@@ -148,6 +148,8 @@ MonoBehaviour:
   slashCooldown: 1
   walkSfx: {fileID: 8300000, guid: 4b9d736c42f24114aacf546d342a1169, type: 3}
   slashSfx: {fileID: 8300000, guid: a61adb31d33dd74418cab1ab75be0da7, type: 3}
+  xrayOnSfx: {fileID: 8300000, guid: 548060c1809cca24bbf5a4f4144431c4, type: 3}
+  xrayOffSfx: {fileID: 8300000, guid: 0b07233818c64e44fb796ef2d8f70cf0, type: 3}
   swordObject: {fileID: 2594817310438900786}
 --- !u!82 &9141119443919106207
 AudioSource:
