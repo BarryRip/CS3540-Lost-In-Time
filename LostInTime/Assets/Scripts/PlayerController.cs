@@ -61,6 +61,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PauseMenu.isGamePaused)
+        {
+            walkAudioSource.Stop();
+            return;
+        }
+
         Vector3 input = GetNormalizedInput();
         input = CalculateCameraSpaceInput(input);
         ApplyMovement(input);
