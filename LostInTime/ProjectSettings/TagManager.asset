@@ -10,6 +10,8 @@ TagManager:
   - NotificationText
   - Void
   - SpawnPoint
+  - FetchQuestSystem
+  - Gate
   layers:
   - Default
   - TransparentFX
