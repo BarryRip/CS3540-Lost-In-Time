@@ -12,6 +12,7 @@ public class UiTextManager : MonoBehaviour
 {
     private TextMeshProUGUI notifText;
     private TextMeshProUGUI collectText;
+    private TextMeshProUGUI descText;
     private bool fadeNotification;
     private Color notifStartColor;
     private Color notifEndColor;
@@ -40,12 +41,23 @@ public class UiTextManager : MonoBehaviour
         {
             Debug.LogWarning("Object with CollectableText tag was not found in the scene. UI text may not work properly.");
         }
+        // Initialize descriptionText only if the tagged object exists
+        GameObject dTextObj = GameObject.FindGameObjectWithTag("DescriptionText");
+        if (dTextObj != null)
+        {
+            descText = dTextObj.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            Debug.LogWarning("Object with DescriptionText tag was not found in the scene. UI text may not work properly.");
+        }
 
         if (notifText == null) return;
 
         notifStartColor = notifText.color;
         notifEndColor = new Color(notifText.color.r, notifText.color.g, notifText.color.b, 0f);
         notifText.color = notifEndColor;
+        descText.color = notifEndColor;
     }
 
     // Update is called once per frame
@@ -57,6 +69,13 @@ public class UiTextManager : MonoBehaviour
         if (fadeNotification)
         {
             notifText.color = Color.Lerp(notifText.color, notifEndColor, t);
+        }
+
+        if (descText == null) return;
+
+        if (fadeNotification)
+        {
+            descText.color = Color.Lerp(descText.color, notifEndColor, t);
         }
     }
 
@@ -70,6 +89,24 @@ public class UiTextManager : MonoBehaviour
 
         notifText.text = txt;
         notifText.color = notifStartColor;
+        fadeNotification = false;
+        Invoke("StartFadingNotif", secondsBeforeFading);
+    }
+
+    /// <summary>
+    /// Send a text notification to the UI with a description, which will fade after a few seconds.
+    /// </summary>
+    /// <param name="notif">The notification text to write to the UI.</param>
+    /// <param name="desc">The description text to write to the UI.</param>
+    public void SetNotificationText(string notif, string desc)
+    {
+        if (notifText == null) return;
+        if (descText == null) return;
+
+        notifText.text = notif;
+        descText.text = desc;
+        notifText.color = notifStartColor;
+        descText.color = notifStartColor;
         fadeNotification = false;
         Invoke("StartFadingNotif", secondsBeforeFading);
     }

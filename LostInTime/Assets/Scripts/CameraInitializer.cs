@@ -24,6 +24,9 @@ public class CameraInitializer : MonoBehaviour
         
         camController.Follow = anchor.transform;
         camController.LookAt = anchor.transform;
+
+        // Force camera to start facing player direction
+        camController.ForceCameraPosition(anchor.transform.position - anchor.transform.forward + anchor.transform.up, new Quaternion());
     }
 
     private void Update()

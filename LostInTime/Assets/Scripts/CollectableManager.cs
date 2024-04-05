@@ -6,7 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class CollectableManager : MonoBehaviour
 {
-    public int index;
+    public enum LevelIndex
+    {
+        OTHER,
+        LEVEL_1,
+        LEVEL_2,
+        LEVEL_3,
+    }
+
+    public LevelIndex index;
     public static int offset;
     public static string Type1Name = "Time Machine Part Type 1";
     public static int Type1NumberCollectables = 2;
@@ -25,7 +33,10 @@ public class CollectableManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        offset = index;
+        offset = index == LevelIndex.LEVEL_1 ? 0
+            : index == LevelIndex.LEVEL_2 ? 6
+            : index == LevelIndex.LEVEL_3 ? 12
+            : 0;
         SetCollectText(GenerateText());
     }
 

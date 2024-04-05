@@ -6,11 +6,19 @@ using UnityEngine.UI;
 public class PowerUpManager : MonoBehaviour
 {
     public static string[] collectedNames;
+    public static string[] descriptions;
 
     // Start is called before the first frame update
     void Awake()
     {
-        collectedNames = new string[] { "Pegasus Boots", "Samurai Sword", "BB Gun", "X-Ray Goggles"};
+        collectedNames = new string[] { "Pegasus Boots", "Samurai Sword", "X-Ray Goggles", "BB Gun"};
+        descriptions = new string[] 
+        {
+            "Press space in midair to perform a double jump!",
+            "Hold left shift to aim, release left shift to dash forward!",
+            "Press left control to toggle X-Ray vision!",
+            "Unimplemented..."
+        };
     }
 
     // Update is called once per frame
@@ -41,14 +49,14 @@ public class PowerUpManager : MonoBehaviour
         else
         {
             GameManager.instance.collectedPowerups[id] = true;
-            SetText("Unlocked " + collectedNames[id]);
+            SetText("Unlocked " + collectedNames[id], descriptions[id]);
         }
     }
 
-    private static void SetText(string msg)
+    private static void SetText(string msg, string desc)
     {
         UiTextManager textManager = FindObjectOfType<UiTextManager>();
-        textManager.SetNotificationText(msg);
+        textManager.SetNotificationText(msg, desc);
     }
 
     private static bool[] GetCollectedIds()

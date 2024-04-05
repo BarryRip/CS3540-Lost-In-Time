@@ -17,6 +17,7 @@ public class CutsceneManager : MonoBehaviour
 
     private CinemachineFreeLook camController;
     private Camera cam;
+    private Transform currentCameraTransform;
     private bool ableToProgressText;
     private float elapsedTime;
 
@@ -45,7 +46,7 @@ public class CutsceneManager : MonoBehaviour
         if (GameManager.instance.inCutscene && ableToProgressText)
         {
             // If able to progress text, flash the spacebar alert to let the player know they can press space to progress text
-            spacebarAlert.enabled = ((int)elapsedTime) % 2 == 0;
+            spacebarAlert.enabled = (Mathf.FloorToInt(elapsedTime)) % 2 == 0;
         }
         if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.inCutscene && ableToProgressText)
         {
@@ -58,17 +59,22 @@ public class CutsceneManager : MonoBehaviour
                 ProgressCutscene();
             }
         }
-        elapsedTime += Time.deltaTime;
+        if (GameManager.instance.inCutscene)
+        {
+            cam.transform.position = currentCameraTransform.position;
+            cam.transform.rotation = currentCameraTransform.rotation;
+        }
+        elapsedTime += Time.deltaTime * 2;
     }
 
     private void ProgressCutscene()
     {
         narrationText.text = dialogues[0];
         dialogues.RemoveAt(0);
-        Transform nextCamTransform = cameraTransforms[0];
+        currentCameraTransform = cameraTransforms[0];
         cameraTransforms.RemoveAt(0);
-        cam.transform.position = nextCamTransform.position;
-        cam.transform.rotation = nextCamTransform.rotation;
+        cam.transform.position = currentCameraTransform.position;
+        cam.transform.rotation = currentCameraTransform.rotation;
         ableToProgressText = false;
         spacebarAlert.enabled = false;
         Invoke("MakeTextProgressable", 1.5f);
@@ -93,5 +99,6 @@ public class CutsceneManager : MonoBehaviour
     private void MakeTextProgressable()
     {
         ableToProgressText = true;
+        elapsedTime = 0f;
     }
 }

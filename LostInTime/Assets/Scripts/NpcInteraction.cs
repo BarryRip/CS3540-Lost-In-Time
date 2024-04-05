@@ -21,6 +21,10 @@ public class NpcInteraction : MonoBehaviour
 
     private void Start()
     {
+        if (textField == null)
+        {
+            textField = GameObject.FindGameObjectWithTag("NPCText").GetComponent<TextMeshProUGUI>();
+        }
         textField.text = "";
         anim = GetComponent<Animator>();
         anim.SetInteger("animState", 0);
