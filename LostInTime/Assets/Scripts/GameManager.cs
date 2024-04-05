@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles persistant game handler behavior.
+/// Handles persistent game handler behavior.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     private static Vector3 positionToSpawnIn;
     // Flag to set when the player should load into a level in a specific location
     private static bool repositionWhenSpawningIn;
+
+    private static float mouseSensitivityModifier = 1f;
+    private static float baseXAxisSpeed = 1f;
+    private static float baseYAxisSpeed = 0.01f;
 
     private void Awake()
     {
@@ -66,8 +70,31 @@ public class GameManager : MonoBehaviour
         return positionToSpawnIn;
     }
 
+    /// <summary>
+    /// Determines if the player should spawn in a different location than the normal scene spawn.
+    /// </summary>
+    /// <returns>True if the player should spawn elsewhere, false otherwise.</returns>
     public static bool ShouldOverridePlayerSpawn()
     {
         return repositionWhenSpawningIn;
+    }
+
+    public void SetMouseSensitivity(float sensitivity)
+    {
+        mouseSensitivityModifier = sensitivity / 5f;
+        if (mouseSensitivityModifier == 0)
+        {
+            mouseSensitivityModifier = 0.1f;
+        }
+    }
+
+    public float GetMouseXSpeed()
+    {
+        return mouseSensitivityModifier * baseXAxisSpeed;
+    }
+
+    public float GetMouseYSpeed()
+    {
+        return mouseSensitivityModifier * baseYAxisSpeed;
     }
 }
