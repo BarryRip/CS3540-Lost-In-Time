@@ -58375,7 +58375,7 @@ PrefabInstance:
       objectReference: {fileID: 2061585093}
     - target: {fileID: 8234093828680680914, guid: bf79c5b64a188f14a91b7a9a8b384ef1, type: 3}
       propertyPath: dialogueLines.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8234093828680680914, guid: bf79c5b64a188f14a91b7a9a8b384ef1, type: 3}
       propertyPath: dialogueLines.Array.data[0]
@@ -58383,7 +58383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8234093828680680914, guid: bf79c5b64a188f14a91b7a9a8b384ef1, type: 3}
       propertyPath: dialogueLines.Array.data[1]
-      value: You want the object? How about this, then?
+      value: You want the object? Bah! Try asking someone else. Now begone!
       objectReference: {fileID: 0}
     - target: {fileID: 8234093828680680914, guid: bf79c5b64a188f14a91b7a9a8b384ef1, type: 3}
       propertyPath: dialogueLines.Array.data[2]
@@ -65128,7 +65128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4915853358281265739, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 5561387981145215527, guid: a6b77aa44f6113549b1b43fcf96048e5, type: 3}
       propertyPath: m_LocalRotation.w
