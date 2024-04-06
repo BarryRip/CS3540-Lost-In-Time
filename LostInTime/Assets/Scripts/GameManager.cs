@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     // Location to spawn in when a level is loaded
     private static Vector3 positionToSpawnIn;
+    // Rotation to spawn in when a level is loaded
+    private static Vector3 rotationToSpawnIn;
     // Flag to set when the player should load into a level in a specific location
     private static bool repositionWhenSpawningIn;
 
@@ -62,9 +64,10 @@ public class GameManager : MonoBehaviour
     /// spawn in a specific location
     /// </summary>
     /// <param name="loadPosition">The location to spawn in the new scene.</param>
-    public static void SetLoadingPosition(Vector3 loadPosition)
+    public static void SetLoadingSpawn(Vector3 loadPosition, Vector3 loadRotation)
     {
         positionToSpawnIn = loadPosition;
+        rotationToSpawnIn = loadRotation;
         repositionWhenSpawningIn = true;
     }
 
@@ -72,11 +75,11 @@ public class GameManager : MonoBehaviour
     /// Retrieve the location to spawn the player at, while also clearing the flag
     /// that determines if the player has a location to spawn in.
     /// </summary>
-    /// <returns>The loading position to spawn the player in.</returns>
-    public static Vector3 GetLoadingPosition()
+    /// <returns>The loading position and rotation to spawn the player in.</returns>
+    public static Vector3[] GetLoadingBundle()
     {
         repositionWhenSpawningIn = false;
-        return positionToSpawnIn;
+        return new Vector3[] { positionToSpawnIn, rotationToSpawnIn, };
     }
 
     /// <summary>

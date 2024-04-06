@@ -10,6 +10,7 @@ public class LevelLoader : MonoBehaviour
         "An easy way to do this is to copy the position component from a game\n" +
         "object in that scene and paste it into this field.")]
     public Vector3 newPlayerLocation;
+    public Vector3 newPlayerRotation;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,7 +24,7 @@ public class LevelLoader : MonoBehaviour
     {
         if (overridePlayerSpawnLocation)
         {
-            GameManager.SetLoadingPosition(newPlayerLocation);
+            GameManager.SetLoadingSpawn(newPlayerLocation, newPlayerRotation);
         }
         SceneManager.LoadScene(sceneToLoad);
         

@@ -6,12 +6,14 @@ public class VoidOut : MonoBehaviour
 {
     public AudioClip voidSfx;
     public string voidMessage;
-    Vector3 spawnPoint;
+    Vector3 spawnPointPos;
+    Vector3 spawnPointRot;
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
+        spawnPointPos = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
+        spawnPointRot = GameObject.FindGameObjectWithTag("SpawnPoint").transform.rotation.eulerAngles;
     }
 
     // Update is called once per frame
@@ -25,8 +27,8 @@ public class VoidOut : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController pc = other.GetComponent<PlayerController>();
-            pc.TeleportTo(spawnPoint);
-            AudioSource.PlayClipAtPoint(voidSfx, spawnPoint, 0.3f);
+            pc.TeleportTo(new Vector3[] { spawnPointPos, spawnPointRot } );
+            AudioSource.PlayClipAtPoint(voidSfx, spawnPointPos, 0.3f);
             UiTextManager textManager = FindObjectOfType<UiTextManager>();
             textManager.SetNotificationText(voidMessage);
         }

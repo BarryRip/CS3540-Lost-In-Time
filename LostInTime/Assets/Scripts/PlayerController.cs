@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         ToggleXRayPlatforms(false);
         if (GameManager.ShouldOverridePlayerSpawn())
         {
-            TeleportTo(GameManager.GetLoadingPosition());
+            TeleportTo(GameManager.GetLoadingBundle());
         }
     }
 
@@ -87,10 +87,11 @@ public class PlayerController : MonoBehaviour
         UpdateStatusWhenGrounded();
     }
 
-    public void TeleportTo(Vector3 position)
+    public void TeleportTo(Vector3[] bundle)
     {
         controller.enabled = false;
-        transform.position = position;
+        transform.position = bundle[0];
+        transform.rotation = Quaternion.Euler(bundle[1]);
         controller.enabled = true;
         CinemachineFreeLook camController = FindObjectOfType<CinemachineFreeLook>();
         camController.ForceCameraPosition(transform.position - transform.forward + transform.up, new Quaternion());

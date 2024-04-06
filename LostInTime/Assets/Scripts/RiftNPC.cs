@@ -72,6 +72,6 @@ public class RiftNPC : MonoBehaviour
 
     private bool FulfilledCondition()
     {
-        return CollectableManager.GetTotalNumberOfPartsCollected() > partsRequired;
+        return CollectableManager.GetTotalNumberOfPartsCollected() >= partsRequired;
     }
 }
