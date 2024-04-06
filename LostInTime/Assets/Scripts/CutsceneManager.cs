@@ -17,6 +17,7 @@ public class CutsceneManager : MonoBehaviour
 
     private CinemachineFreeLook camController;
     private Camera cam;
+    private GameObject collectableTextObj;
     private Transform currentCameraTransform;
     private bool ableToProgressText;
     private float elapsedTime;
@@ -26,6 +27,7 @@ public class CutsceneManager : MonoBehaviour
     {
         camController = FindObjectOfType<CinemachineFreeLook>();
         cam = Camera.main;
+        collectableTextObj = GameObject.FindGameObjectWithTag("CollectableText");
         cutsceneCanvas.SetActive(false);
 
         if (GameManager.instance.GetFlag(cutsceneKeyId))
@@ -85,12 +87,14 @@ public class CutsceneManager : MonoBehaviour
         camController.enabled = false;
         cutsceneCanvas.SetActive(true);
         GameManager.instance.inCutscene = true;
+        collectableTextObj.SetActive(false);
         ProgressCutscene();
     }
 
     private void EndCutscene()
     {
         cutsceneCanvas.SetActive(false);
+        collectableTextObj.SetActive(true);
         GameManager.instance.inCutscene = false;
         camController.enabled = true;
         GameManager.instance.SetFlag(cutsceneKeyId);

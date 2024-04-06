@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
@@ -91,6 +92,8 @@ public class PlayerController : MonoBehaviour
         controller.enabled = false;
         transform.position = position;
         controller.enabled = true;
+        CinemachineFreeLook camController = FindObjectOfType<CinemachineFreeLook>();
+        camController.ForceCameraPosition(transform.position - transform.forward + transform.up, new Quaternion());
     }
 
     /// <summary>

@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     private static float baseYAxisSpeed = 0.01f;
     private Dictionary<string, bool> flagDict;
 
+    public const int TOTAL_MACHINE_PARTS = 18;
+    public const int TOTAL_POWERUPS = 3;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -37,8 +40,8 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         Application.targetFrameRate = 60;
-        collectedParts = new bool[24];
-        collectedPowerups = new bool[4];
+        collectedParts = new bool[TOTAL_MACHINE_PARTS];
+        collectedPowerups = new bool[TOTAL_POWERUPS];
         mouseSensitivityModifier = 1f;
         flagDict = new Dictionary<string, bool>();
     }

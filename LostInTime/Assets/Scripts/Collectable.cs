@@ -6,6 +6,9 @@ public class Collectable : MonoBehaviour
 {
     public int partID;
     public AudioClip collectSfx;
+    public GameObject type1Model;
+    public GameObject type2Model;
+    public GameObject type3Model;
 
     private CollectableMovement movement;
 
@@ -17,6 +20,9 @@ public class Collectable : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        type1Model.SetActive(CollectableManager.GetType(partID) == CollectableManager.PartType.TYPE_1);
+        type2Model.SetActive(CollectableManager.GetType(partID) == CollectableManager.PartType.TYPE_2);
+        type3Model.SetActive(CollectableManager.GetType(partID) == CollectableManager.PartType.TYPE_3);
         movement = GetComponent<CollectableMovement>();
     }
 

@@ -4,6 +4,13 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script handles managing the collected time machine parts, updating the UI for the parts, and
+/// delineating the part types.
+/// <para />
+/// NOTE that the GameManager handles the persistent storage of what machine parts have been collected.
+/// This script queries from GameManager and handles the actual management and typing of the parts.
+/// </summary>
 public class CollectableManager : MonoBehaviour
 {
     public enum LevelIndex
@@ -14,39 +21,62 @@ public class CollectableManager : MonoBehaviour
         LEVEL_3,
     }
 
+    public enum PartType
+    {
+        TYPE_1,
+        TYPE_2,
+        TYPE_3
+    }
+
     public LevelIndex index;
-    public static int offset;
-    public static string Type1Name = "Time Machine Part Type 1";
-    public static int Type1NumberCollectables = 2;
-    public static int Type1Requried = 1;
-    public static string Type2Name = "Time Machine Part Type 2";
-    public static int Type2NumberCollectables = 2;
-    public static int Type2Requried = 1;
-    public static string Type3Name = "Time Machine Part Type 3";
-    public static int Type3NumberCollectables = 2;
-    public static int Type3Requried = 1;
+    public static LevelIndex staticIndex;
 
     // total assuming 6 parts per world, subject to change
     public static int CollectablesInWorld = 6;
     public static int TotalCollectables = 6;
 
+    private static Dictionary<int, PartType> partTypeDict;
+
     // Start is called before the first frame update
     private void Start()
     {
-        offset = index == LevelIndex.LEVEL_1 ? 0
-            : index == LevelIndex.LEVEL_2 ? 6
-            : index == LevelIndex.LEVEL_3 ? 12
-            : 0;
-        SetCollectText(GenerateText());
+        // Maps all part ids to what type of part they are.
+        partTypeDict = new Dictionary<int, PartType>
+        {
+            { 0, PartType.TYPE_1 },
+            { 1, PartType.TYPE_1 },
+            { 2, PartType.TYPE_2 },
+            { 3, PartType.TYPE_2 },
+            { 4, PartType.TYPE_3 },
+            { 5, PartType.TYPE_3 },
+            { 6, PartType.TYPE_1 },
+            { 7, PartType.TYPE_1 },
+            { 8, PartType.TYPE_2 },
+            { 9, PartType.TYPE_2 },
+            { 10, PartType.TYPE_3 },
+            { 11, PartType.TYPE_3 },
+            { 12, PartType.TYPE_1 },
+            { 13, PartType.TYPE_1 },
+            { 14, PartType.TYPE_2 },
+            { 15, PartType.TYPE_2 },
+            { 16, PartType.TYPE_3 },
+            { 17, PartType.TYPE_3 },
+        };
+
+        staticIndex = index;
+        DisplayCollectablesInUI();
     }
 
-    private static string GenerateText()
+    private static void DisplayCollectablesInUI()
     {
-        return
-            Type1Name + ": " + GetTotalPartsType1() + "/" + Type1Requried + "(max: " + Type1NumberCollectables + ")" + "\n" +
-            Type2Name + ": " + GetTotalPartsType2() + "/" + Type2Requried + "(max: " + Type2NumberCollectables + ")" + "\n" +
-            Type3Name + ": " + GetTotalPartsType3() + "/" + Type3Requried + "(max: " + Type3NumberCollectables + ")" + "\n" +
-            "Total Collected: " + GetTotalPartsCollected();
+        string displayText =
+            "Total Parts Collected: " + GetTotalNumberOfPartsCollected() + " / " + GameManager.TOTAL_MACHINE_PARTS + "\n" +
+            "Parts Remaining in this Age: " + GetNumberOfPartsRemainingInLevel() + "\n" +
+            "Total " + GetTypeName(PartType.TYPE_1) + " Parts Collected: " + GetNumberOfPartsCollectedOfType(PartType.TYPE_1) + "\n" +
+            "Total " + GetTypeName(PartType.TYPE_2) + " Parts Collected: " + GetNumberOfPartsCollectedOfType(PartType.TYPE_2) + "\n" +
+            "Total " + GetTypeName(PartType.TYPE_3) + " Parts Collected: " + GetNumberOfPartsCollectedOfType(PartType.TYPE_3);
+
+        SetCollectText(displayText);
     }
 
     public static void GetPart(int id)
@@ -59,13 +89,13 @@ public class CollectableManager : MonoBehaviour
         {
             GameManager.instance.collectedParts[id] = true;
             SetNotifText("Got a time machine part!");
-            SetCollectText(GenerateText());
-
-            if (HasPartsRequired())
-            {
-                SetNotifText("You Win!");
-            }
+            DisplayCollectablesInUI();
         }
+    }
+
+    public static PartType GetType(int id)
+    {
+        return partTypeDict[id];
     }
 
     private static void SetNotifText(string msg)
@@ -80,36 +110,51 @@ public class CollectableManager : MonoBehaviour
         textManager.SetCollectableText(msg);
     }
 
-    private static bool HasPartsRequired()
-    {
-        return
-            GetTotalPartsType1() == Type1Requried &&
-            GetTotalPartsType2() == Type2Requried &&
-            GetTotalPartsType3() == Type3Requried;
-    }
-
-    private static int GetTotalPartsCollected()
+    public static int GetTotalNumberOfPartsCollected()
     {
         return Array.FindAll(GetCollectedIds(), (bool x) => { return x; }).Length;
     }
 
-    private static int GetTotalPartsType1()
+    public static int GetNumberOfPartsRemainingInLevel()
     {
-        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), 0 + offset, Type1NumberCollectables + offset).ToArray(), (bool x) => { return x; }).Length;
+        if (staticIndex == LevelIndex.OTHER) return 0;
+
+        return Array.FindAll(new ArraySegment<bool>(
+                GetCollectedIds(), GetLevelOffset(), 6).ToArray(),
+                (bool x) => { return !x; }).Length;
     }
 
-    private static int GetTotalPartsType2()
+    public static int GetNumberOfPartsCollectedOfType(PartType type)
     {
-        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables + offset, Type1NumberCollectables + Type2NumberCollectables + offset).ToArray(), (bool x) => { return x; }).Length;
-    }
-
-    private static int GetTotalPartsType3()
-    {
-        return Array.FindAll(new ArraySegment<bool>(GetCollectedIds(), Type1NumberCollectables + offset + Type2NumberCollectables, Type1NumberCollectables + offset + Type2NumberCollectables + Type3NumberCollectables).ToArray(), (bool x) => { return x; }).Length;
+        int total = 0;
+        for (int i = 0; i < GetCollectedIds().Length; i++)
+        {
+            if (GetCollectedIds()[i] && partTypeDict[i] == type)
+            {
+                total++;
+            }
+        }
+        return total;
     }
 
     private static bool[] GetCollectedIds()
     {
         return GameManager.instance.collectedParts;
+    }
+
+    public static string GetTypeName(PartType type)
+    {
+        return type == PartType.TYPE_1 ? "Cog"
+            : type == PartType.TYPE_2 ? "Pipe"
+            : type == PartType.TYPE_3 ? "Chunk"
+            : "unknown part type?";
+    }
+
+    private static int GetLevelOffset()
+    {
+        return staticIndex == LevelIndex.LEVEL_1 ? 0
+            : staticIndex == LevelIndex.LEVEL_2 ? 6
+            : staticIndex == LevelIndex.LEVEL_3 ? 12
+            : 0;
     }
 }

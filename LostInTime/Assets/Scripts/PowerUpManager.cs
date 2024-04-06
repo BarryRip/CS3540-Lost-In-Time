@@ -11,13 +11,12 @@ public class PowerUpManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        collectedNames = new string[] { "Pegasus Boots", "Samurai Sword", "X-Ray Goggles", "BB Gun"};
+        collectedNames = new string[] { "Pegasus Boots", "Samurai Sword", "X-Ray Goggles"};
         descriptions = new string[] 
         {
             "Press space in midair to perform a double jump!",
             "Hold left shift to aim, release left shift to dash forward!",
             "Press left control to toggle X-Ray vision!",
-            "Unimplemented..."
         };
     }
 
