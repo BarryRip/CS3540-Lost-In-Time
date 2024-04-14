@@ -58,6 +58,7 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToMenu()
     {
         isGamePaused = false;
+        GameManager.instance.inCutscene = false;
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         ToggleCamera(true);
