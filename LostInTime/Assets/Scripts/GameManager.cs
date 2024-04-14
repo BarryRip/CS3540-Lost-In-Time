@@ -50,12 +50,21 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (debugMode)
+        if (debugMode && !GetFlag("ActivatedDebugMode"))
         {
             for (int i = 0; i < collectedPowerups.Length; i++)
             {
                 collectedPowerups[i] = true;
             }
+            for (int i = 0; i < collectedParts.Length; i++)
+            {
+                collectedParts[i] = true;
+            }
+            if (!GetFlag("firstCutscene"))
+            {
+                SetFlag("firstCutscene");
+            }
+            SetFlag("ActivatedDebugMode");
         }
     }
 

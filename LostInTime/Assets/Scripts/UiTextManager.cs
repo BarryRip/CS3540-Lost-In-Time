@@ -18,8 +18,7 @@ public class UiTextManager : MonoBehaviour
     private Color notifEndColor;
     private float secondsBeforeFading = 2f;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Initialize notifText only if the tagged object exists
         GameObject nTextObj = GameObject.FindGameObjectWithTag("NotificationText");

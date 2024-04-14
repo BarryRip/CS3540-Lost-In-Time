@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MachineNPC : MonoBehaviour
@@ -42,7 +43,7 @@ public class MachineNPC : MonoBehaviour
         {
             if (FullyHealedMachineCondition())
             {
-                WriteTextToUi("YOU WIN!", "Thanks for playing!");
+                SceneManager.LoadScene("EndingScene");
             }
             else
             {

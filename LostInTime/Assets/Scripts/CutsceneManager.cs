@@ -84,19 +84,31 @@ public class CutsceneManager : MonoBehaviour
 
     public void StartCutscene()
     {
-        camController.enabled = false;
+        if (camController != null)
+        {
+            camController.enabled = false;
+        }
         cutsceneCanvas.SetActive(true);
         GameManager.instance.inCutscene = true;
-        collectableTextObj.SetActive(false);
+        if (collectableTextObj != null)
+        {
+            collectableTextObj.SetActive(false);
+        }
         ProgressCutscene();
     }
 
     private void EndCutscene()
     {
         cutsceneCanvas.SetActive(false);
-        collectableTextObj.SetActive(true);
+        if (collectableTextObj != null)
+        {
+            collectableTextObj.SetActive(true);
+        }
         GameManager.instance.inCutscene = false;
-        camController.enabled = true;
+        if (camController != null)
+        {
+            camController.enabled = true;
+        }
         GameManager.instance.SetFlag(cutsceneKeyId);
     }
 
