@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.090077855, g: 0.28178278, b: 0.4859934, a: 1}
+  m_IndirectSpecularColor: {r: 0.08768027, g: 0.28159314, b: 0.48604935, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5697,6 +5697,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 9900c1bb3daf8034ca7120b29854f3b3, type: 3}
+--- !u!4 &332656840 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+  m_PrefabInstance: {fileID: 1899598846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &336104778
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -45441,6 +45446,63 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1001 &1899598846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 705735101}
+    m_Modifications:
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 75.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.77098507
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6368532
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 79.115
+      objectReference: {fileID: 0}
+    - target: {fileID: 549190149141816692, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5348009422925079111, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
+      propertyPath: m_Name
+      value: MountainChallenge
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d240b6db4a50ac4196026af48277e99, type: 3}
 --- !u!64 &1901533332
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -51200,7 +51262,11 @@ PrefabInstance:
     - {fileID: 7906783942987987735, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
     - {fileID: 8850371773866899549, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
     - {fileID: 8143560520468022804, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
+    - {fileID: 4762192896567058748, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3216231846146984571, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 332656840}
     - targetCorrespondingSourceObject: {fileID: 3216231846146984571, guid: 4d1fdba38f4c7438cb2c68cbcdd4ce61, type: 3}
       insertIndex: 2
       addedObject: {fileID: 977285037}
