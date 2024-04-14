@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 slashingDirection;
     private bool isGogglesActive;
     private GameObject[] xRayPlatforms;
+    private GameObject[] xRayInvisPlatforms;
     // This "wasApplyingGroundingForce" bool is a bit confusing, but
     // essentially, it indicates if a grounding force was applied to
     // the player last frame. Should reset y velocity to 0 if true.
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
         slashIndicator.SetActive(false);
         swordObject.SetActive(false);
         xRayPlatforms = GameObject.FindGameObjectsWithTag("XRayPlatform");
+        xRayInvisPlatforms = GameObject.FindGameObjectsWithTag("XRayTransparentPlatform");
         ToggleXRayPlatforms(false);
         if (GameManager.ShouldOverridePlayerSpawn())
         {
@@ -366,6 +368,10 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject obj in xRayPlatforms)
         {
             obj.SetActive(toggle);
+        }
+        foreach (GameObject obj in xRayInvisPlatforms)
+        {
+            obj.SetActive(!toggle);
         }
     }
 }

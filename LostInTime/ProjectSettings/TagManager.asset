@@ -17,6 +17,7 @@ TagManager:
   - SlashIndicator
   - DescriptionText
   - NPCText
+  - XRayTransparentPlatform
   layers:
   - Default
   - TransparentFX
