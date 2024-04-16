@@ -18,7 +18,7 @@ public class NPCFSMChase : MonoBehaviour
     private int currentDestinationIndex = 0;
 
     private GameObject player;
-    private Transform enemyEyes;
+    public  Transform npcEyes;
     private NavMeshAgent agent;
     Vector3 nextDestination;
     public enum FSMStates
@@ -33,7 +33,7 @@ public class NPCFSMChase : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        enemyEyes = transform; // Assuming NPC's eyes are its own transform
+        //npcEyes = GameObject.FindGameObjectWithTag("Player");
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -82,6 +82,10 @@ public class NPCFSMChase : MonoBehaviour
         {
             FaceTarget(nextDestination);
         }
+
+        FaceTarget(nextDestination);
+
+        agent.SetDestination(nextDestination);
     }
 
     void UpdateTalkState()
@@ -99,7 +103,7 @@ public class NPCFSMChase : MonoBehaviour
     {
         print("Chasing");
 
-        anim.SetInteger("animState", 2);
+        anim.SetInteger("animState", 3);
 
         nextDestination = player.transform.position;
 
@@ -140,11 +144,11 @@ public class NPCFSMChase : MonoBehaviour
     bool IsPlayerInClearFOV()
     {
         RaycastHit hit;
-        Vector3 directionToPlayer = player.transform.position - enemyEyes.position;
+        Vector3 directionToPlayer = player.transform.position - npcEyes.position;
 
-        if (Vector3.Angle(directionToPlayer, enemyEyes.forward) <= 45f)
+        if (Vector3.Angle(directionToPlayer, npcEyes.forward) <= 45f)
         {
-            if (Physics.Raycast(enemyEyes.position, directionToPlayer, out hit, chaseDistance))
+            if (Physics.Raycast(npcEyes.position, directionToPlayer, out hit, chaseDistance))
             {
                 if (hit.collider.CompareTag("Player"))
                 {

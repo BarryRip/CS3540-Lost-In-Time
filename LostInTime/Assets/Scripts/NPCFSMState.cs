@@ -29,7 +29,7 @@ public class NPCFSMState : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        enemyEyes = transform; // Assuming NPC's eyes are its own transform
+        enemyEyes = transform;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
