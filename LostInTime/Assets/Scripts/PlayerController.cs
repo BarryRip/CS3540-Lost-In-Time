@@ -89,6 +89,11 @@ public class PlayerController : MonoBehaviour
         UpdateStatusWhenGrounded();
     }
 
+    public bool isGrounded()
+    {
+        return controller.isGrounded;
+    }
+
     public void TeleportTo(Vector3[] bundle)
     {
         controller.enabled = false;
