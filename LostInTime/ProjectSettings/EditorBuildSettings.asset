@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PolishedLevel.unity
     guid: 0ae0d6c4ec4459e4481ef952e41140a4
   - enabled: 1
+    path: Assets/Scenes/Circus.unity
+    guid: 94afc553968d3f74586805805bf2a8ec
+  - enabled: 1
     path: Assets/Scenes/Poli2hedLevel.unity
     guid: 3daac010bfcabf8488fd26e93e0dbc04
   - enabled: 1

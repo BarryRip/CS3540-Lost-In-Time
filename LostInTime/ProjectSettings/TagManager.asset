@@ -18,6 +18,10 @@ TagManager:
   - DescriptionText
   - NPCText
   - XRayTransparentPlatform
+  - MachinePart
+  - CarnivalNPC
+  - CarnivalBarrier
+  - CarnivalEntrance
   layers:
   - Default
   - TransparentFX
