@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09007538, g: 0.28178203, b: 0.4859934, a: 1}
+  m_IndirectSpecularColor: {r: 0.090077855, g: 0.28178278, b: 0.4859934, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -40182,7 +40182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2409454522283570038, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
       propertyPath: dialogueLines.Array.data[2]
-      value: We could probably reopen the carnival if you collect, say, 4 of them?
+      value: We could probably reopen the carnival if you collect, say, 3 of them?
       objectReference: {fileID: 0}
     - target: {fileID: 6205634664292441405, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
       propertyPath: m_IsKinematic
