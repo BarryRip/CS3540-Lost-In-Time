@@ -30,7 +30,7 @@ public class CarnivalBehavior : MonoBehaviour
         /* disables the barrier and the old NPC blocking the carnival entrance,
          * as well as sets up the new NPC (guard steps away from entrance)
         */
-        if (machineParts.Length <= 2 && barrierUp)
+        if (CollectableManager.GetTotalNumberOfPartsCollected() > 2 && barrierUp)
         {
             barrierUp = false;
             foreach (GameObject g in carnivalNPC)
