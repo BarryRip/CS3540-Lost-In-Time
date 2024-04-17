@@ -3587,6 +3587,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MachinePart
       objectReference: {fileID: 0}
+    - target: {fileID: 8870755641642660637, guid: 6e6744d3a18157c4b9d908ad7e09c1e0, type: 3}
+      propertyPath: m_TagString
+      value: MachinePart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

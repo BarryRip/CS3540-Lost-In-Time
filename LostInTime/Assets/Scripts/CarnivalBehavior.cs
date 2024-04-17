@@ -7,7 +7,8 @@ public class CarnivalBehavior : MonoBehaviour
     GameObject[] machineParts;
     GameObject[] carnivalNPC;
     GameObject[] carnivalBarrier;
-    bool barrierUp = true;
+    public static bool barrierUp = true;
+    public static bool hasBeenInCarnival = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,24 @@ public class CarnivalBehavior : MonoBehaviour
             {
                 o.SetActive(false);
             }
+            Invoke("SetUiText", 1f);
         }
+        else if (hasBeenInCarnival)
+        {
+            foreach (GameObject g in carnivalNPC)
+            {
+                g.SetActive(true);
+            }
+            foreach (GameObject o in carnivalBarrier)
+            {
+                o.SetActive(false);
+            }
+        }
+    }
+
+    private void SetUiText()
+    {
+        UiTextManager manager = GameObject.FindObjectOfType<UiTextManager>();
+        manager.SetNotificationText("The carnival has reopened!");
     }
 }
