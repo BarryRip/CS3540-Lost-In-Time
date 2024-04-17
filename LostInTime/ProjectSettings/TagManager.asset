@@ -22,6 +22,7 @@ TagManager:
   - CarnivalNPC
   - CarnivalBarrier
   - CarnivalEntrance
+  - Movie
   layers:
   - Default
   - TransparentFX
