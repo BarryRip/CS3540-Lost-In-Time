@@ -19,7 +19,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"C:/Users/nicoc/Desktop/GitHub Transfer/CS3540-Lost-In-Time/LostInTime/Builds/WebGlFP4;C:/Users/nicoc/Desktop/GitHub Transfer/CS3540-Lost-In-Time/LostInTime/WebGL Builds/Webglfp4;;;;;;;;\"}"
+                "value": "{\"m_Value\":\"C:/Users/ericb/Desktop/GaProg/githubFP/repo2/CS3540-Lost-In-Time/LostInTime/WebGL Builds/FinalBuild1024;C:/Users/ericb/Desktop/GaProg/githubFP/repo2/CS3540-Lost-In-Time/LostInTime/WebGL Builds/Build950;C:/Users/ericb/Desktop/GaProg/githubFP/repo2/CS3540-Lost-In-Time/LostInTime/WebGL Builds/WebGlBuild921Final;C:/Users/ericb/Desktop/GaProg/githubFP/repo2/CS3540-Lost-In-Time/LostInTime/WebGL Builds/WebGlBuild9Final;C:/Users/nicoc/Desktop/GitHub Transfer/CS3540-Lost-In-Time/LostInTime/Builds/WebGlFP4;C:/Users/nicoc/Desktop/GitHub Transfer/CS3540-Lost-In-Time/LostInTime/WebGL Builds/Webglfp4;;;;\"}"
             }
         ]
     }

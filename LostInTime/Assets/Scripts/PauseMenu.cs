@@ -72,6 +72,9 @@ public class PauseMenu : MonoBehaviour
 
     private void ToggleCamera(bool toggle)
     {
-        camController.enabled = toggle;
+        if (!GameManager.instance.inCutscene)
+        {
+            camController.enabled = toggle;
+        }
     }
 }
