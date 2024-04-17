@@ -372,11 +372,25 @@ public class PlayerController : MonoBehaviour
     {
         foreach (GameObject obj in xRayPlatforms)
         {
-            obj.SetActive(toggle);
+            obj.transform.GetComponentInChildren<MeshRenderer>().enabled = toggle;
+            for (int i = 0; i < obj.transform.childCount; i++)
+            {
+                foreach (var renderers in obj.transform.GetChild(i).GetComponents<MeshRenderer>())
+                {
+                    renderers.enabled = toggle;
+                }
+            }
         }
         foreach (GameObject obj in xRayInvisPlatforms)
         {
-            obj.SetActive(!toggle);
+            obj.transform.GetComponentInChildren<MeshRenderer>().enabled = !toggle;
+            for (int i = 0; i < obj.transform.childCount; i++)
+            {
+                foreach (var renderers in obj.transform.GetChild(i).GetComponents<MeshRenderer>())
+                {
+                    renderers.enabled = !toggle;
+                }
+            }
         }
     }
 }
