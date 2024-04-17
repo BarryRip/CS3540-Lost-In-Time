@@ -31,6 +31,15 @@ public class FetchQuest1 : FetchQuest
         fqs.unlocked.Add(this);
     }
 
+    override public string GiveQuestText()
+    {
+        return "";
+    }
+
+    override public string TurnInQuestText()
+    {
+        return "";
+    }
 
     override public void PickUp()
     {

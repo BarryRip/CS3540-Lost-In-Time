@@ -29,9 +29,16 @@ public class FetchQuest2 : FetchQuest
 
         fqs = GameObject.FindGameObjectWithTag("FetchQuestSystem").GetComponent<FetchQuestSystem>();
         fqs.unlocked.Add(this);
+    }
 
-        Invoke("SetUiText1", .4f);
-        Invoke("SetUiText2", 1f);
+    override public string GiveQuestText()
+    {
+        return "If you want to open up the storage area to collect that strange part, bring me a hamburger.";
+    }
+
+    override public string TurnInQuestText()
+    {
+        return "Thanks! The gate is open.";
     }
 
     private void SetUiText1()
