@@ -40498,6 +40498,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2409454522283570038, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
+      propertyPath: dialogueLines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409454522283570038, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
       propertyPath: dialogueLines.Array.data[0]
       value: Apologies, but the carnival has suspended activities due to the appearance
         of these strange objects.
@@ -40505,6 +40509,10 @@ PrefabInstance:
     - target: {fileID: 2409454522283570038, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
       propertyPath: dialogueLines.Array.data[1]
       value: If you know what they are, maybe you could help rid us of them?
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409454522283570038, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
+      propertyPath: dialogueLines.Array.data[2]
+      value: We could probably reopen the carnival if you collect, say, 4 of them?
       objectReference: {fileID: 0}
     - target: {fileID: 6205634664292441405, guid: 507f5dc602b42c549a32a51aa9236bb1, type: 3}
       propertyPath: m_IsKinematic
